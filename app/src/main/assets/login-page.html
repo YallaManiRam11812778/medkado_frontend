@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedKado Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"> <!-- Correct link -->
+    <link rel="stylesheet" href="login-page.css">
+</head>
+<body>
+<div class="login-container">
+    <div class="logo">
+        <img src="./MEDKADO_Logo.png" alt="MedKado Logo" class="logo-image">
+        <h1>MedKado</h1>
+    </div>
+    <h2>Login</h2>
+    <p class="subtitle">My card, My Health</p>
+    <form id="login-form">
+        <div class="form-group">
+            <label for="username">Email ID</label>
+            <input type="text" id="username" placeholder="Enter your email ID" required>
+            <small class="error-message" id="username-error">Email ID is required</small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-field">
+                <input type="password" id="password" placeholder="Enter your password" required>
+                <button type="button" class="toggle-password" id="toggle-password">Show</button>
+            </div>
+            <small class="error-message" id="password-error">Password is required</small>
+        </div>
+        <button type="submit" class="login-btn" id="login-button">
+            <span class="button-text">LOGIN</span>
+            <span class="loader" style="display: none;"></span> <!-- Initially hidden -->
+        </button>
+        <div class="dont-have-account">
+            <p class="dont-have-account-p">Don't have an account?</p>
+            <a href="signup-page.html">Sign Up</a>
+        </div>
+    </form>
+</div>
+<script src="loginscript.js"></script>
+
+</body>
+</html>

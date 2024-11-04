@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostics Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="coupon-detailed-view.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <!-- Left-aligned section with back arrow, title, and coupon info -->
+        <div class="header-left">
+            <i class="ri-arrow-left-line" onclick="redirectToPage()"></i>
+            <div class="header-title">
+                <h2>Diagnostics</h2>
+                <p>x2 coupons expire in 2 days</p>
+            </div>
+        </div>
+
+        <!-- Right-aligned button for "Add coupon" -->
+        <button class="coupon-btn">
+            <i class="ri-ticket-line"></i> Add coupon
+        </button>
+    </div>
+
+    <div class="search-section">
+        <input type="text" placeholder="Search hospital">
+        <i class="ri-search-line"></i>
+        <i class="ri-map-pin-line"></i>
+    </div>
+
+    <!-- Placeholder for Hospital List -->
+    <div id="hospital-list" class="hospital-list"></div>
+</div>
+
+
+<script src="coupon-detailed-view.js"></script>
+</body>
+</html>

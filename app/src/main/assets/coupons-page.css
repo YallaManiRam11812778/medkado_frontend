@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden; /* Prevents side scrolling */
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #F2F2F2;
+}
+
+.header {
+    background-color: #000;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    height: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.coupon-count {
+    font-weight: 400;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+    margin-bottom:5px;
+}
+
+.coupon-count span {
+    background: linear-gradient(to right, #D69FB1, #4461F2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 32px;
+    font-weight: bolder;
+}
+.coupon-head-desc{
+    color:#aaa;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.buy-coupon-btn {
+    display: flex;
+    color: #4461F2;
+    font-size:14px;
+    border:none;
+    font-weight:bold;
+    background:none;
+    margin-top:20px;
+}
+
+.gift-image {
+    width: 80px;
+    position: absolute;
+    top: 75px;
+    right: 20px;
+}
+
+.coupon-section {
+    padding: 20px;
+    background-color: #fafafa;
+    margin-bottom: 50px;
+}
+
+.coupon-card {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.coupon-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.coupon-desc{
+    font-size: 12px;
+    color: #444;
+    margin-top: 3px;
+    margin-bottom:5px;
+}
+
+.coupon-validity{
+    font-size: 12px;
+        color: #888;
+        margin-top: 10px;
+}
+
+.coupon-details{
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.check-availability-btn {
+    color: #4461F2;
+    border: 1px solid #4461F2;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+ /* Bottom Navigation */
+ .bottom-nav {
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     padding: 12px 0;
+     background-color: #ffffff;
+     border-top: 1px solid #eee;
+ }
+
+ .nav-item {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     font-size: 12px;
+     color: #333;
+     text-decoration: none;
+ }
+
+ .nav-item img {
+     width: 24px;
+     height: 24px;
+     margin-bottom: 4px;
+ }
+
+ .nav-item.active {
+     color: #0072ff;
+     font-weight: bold;
+ }

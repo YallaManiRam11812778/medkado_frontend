@@ -1,0 +1,125 @@
+/* Overlay background */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    visibility: hidden;
+}
+
+/* Bottom Drawer Popup container */
+.drawer-popup {
+    background: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* Mirror finish effect (divider at the top) */
+.mirror-bar {
+    width: 60px;
+    height: 6px;
+    background: #000;
+    opacity: 0.2;
+    border-radius: 3px;
+    margin: 0 auto 16px;
+}
+
+/* Header section */
+.popup-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.popup-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.popup-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Services section */
+.services-offered {
+    font-size: 14px;
+    color: #888888;
+    margin-bottom: 20px;
+    margin-top:30px;
+}
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.service-item p {
+    margin: 0;
+}
+
+.service-name {
+    font-weight: bold;
+    font-size: 15px;
+    color: #000;
+}
+
+.service-time {
+    font-size: 13px;
+    color: #888;
+}
+
+.price {
+    text-align: right;
+}
+
+.price .free {
+    color: #00C853;
+    font-weight: bold;
+}
+
+.price .mrp {
+    text-decoration: line-through;
+    font-size: 12px;
+    color: #888;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Show popup */
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay.show .drawer-popup {
+    transform: translateY(0);
+}

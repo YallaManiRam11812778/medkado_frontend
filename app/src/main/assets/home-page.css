@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #f4f5f7;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    background: linear-gradient(90deg, #4b6cb7, #182848);
+    color: white;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-text h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.profile-text p {
+    font-size: 12px;
+    color: #d1d1d1;
+}
+
+.header-icons .icon {
+    font-size: 24px;
+    margin-left: 16px;
+}
+
+/* Container for the two cards */
+.statistics-section {
+    display: flex;
+    gap: 12px; /* Reduced gap for smaller screens */
+    justify-content: center;
+    padding: 8px;
+    margin-bottom:15px;
+    margin-top:15px;
+     /* Added padding for mobile view */
+}
+
+/* Common card styles */
+.coupons-container,
+.withdrawal-container {
+    width: 160px; /* Reduced width to fit mobile screens */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 16px; /* Adjusted padding for a balanced look */
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+}
+
+/* Header section */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: 600;
+    font-size: 13px; /* Adjusted font size */
+    color: #333;
+}
+
+/* Arrow icon style */
+.arrow-icon {
+    font-size: 16px;
+    color: #888;
+}
+
+/* Donut chart container */
+.donut-chart {
+    position: relative;
+    width: 80px; /* Reduced size to fit within mobile view */
+    height: 80px;
+    background: conic-gradient(#4a90e2 70%, #e0e0e0 70%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px; /* Adjusted margin */
+}
+
+/* Inner circle to create donut effect */
+.donut-chart::before {
+    content: '';
+    position: absolute;
+    width: 50px; /* Adjusted size to match donut chart */
+    height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Text inside the donut chart */
+.progress-text {
+    position: absolute;
+    font-size: 12px;
+    color: #333;
+    font-weight: 500;
+    z-index: 2;
+}
+
+/* Withdrawal amount style */
+.withdrawal-amount {
+    font-size: 18px; /* Adjusted font size for emphasis */
+    font-weight: bold;
+    color: #4caf50;
+    margin-top: 16px;
+    text-align:left;
+    align-items:left;
+}
+
+/* Refer text style */
+.refer-text {
+    font-size: 10px;
+    color: #888;
+    margin-top: 14px;
+    align-items:left;
+}
+
+.banner_card{
+    background: linear-gradient(90deg, #b2f7ef, #e0ffe4);
+    padding:20px;
+    display:flex;
+    position:relative;
+    margin-bottom:0px;
+ }
+
+.arrow {
+    font-size: 18px;
+    color: #333;
+}
+
+.coupons-withdrawal {
+    display: flex;
+    padding: 16px;
+    gap: 12px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    flex: 1;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+}
+
+.arrow {
+    font-size: 18px;
+    color: #333;
+}
+
+.coupon-chart {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 12px 0;
+}
+
+.progress-ring__circle {
+    stroke: #4b6cb7;
+    stroke-width: 6;
+    fill: transparent;
+}
+
+.coupon-chart span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.withdrawal-card h3 {
+    font-size: 24px;
+    color: #28a745;
+    margin: 8px 0;
+}
+
+.withdrawal-card .subtext {
+    font-size: 12px;
+    color: #888;
+}
+
+.withdrawal-card h3 {
+    font-size: 24px;
+    color: #28a745;
+    margin: 8px 0;
+}
+
+.withdrawal-card .subtext {
+    font-size: 12px;
+    color: #888;
+}
+
+.health-card {
+    background: linear-gradient(90deg, #b2f7ef, #e0ffe4);
+    display: flex;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 16px;
+    position: relative;
+}
+.card-content {
+    display: block;
+}
+.card-content h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom:8px
+}
+
+.card-content p {
+    font-size: 12px;
+    color: #333;
+}
+.card-image{
+    display:block;
+    position: absolute;
+      top: 68%;
+      left: 50%;
+      transform: translate(60%, -50%);
+}
+.price {
+    color: #ff5656;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.explore-button {
+    margin-top:10px;
+    padding: 8px 16px;
+    background-color: #0072ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.doctor-img {
+    width: 10px;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+}
+
+.nearby-services{
+    padding-top:40px;
+    background-color:#fff;
+    margin-bottom:20px;
+}
+/* Container for the Nearby Services and View Map */
+.nearby-services-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Adjust as needed */
+    margin:left:10px;
+}
+
+/* Styling for the Nearby Services text */
+.nearby-services-container h3 {
+    font-weight: bold;
+    font-size: 14px; /* As per your preferred size */
+    margin-left: 10px;
+}
+
+.location {
+    font-size: 12px;
+    color: #888888; /* Gray color as shown in the image */
+    margin-left: 10px;
+}
+
+/* Styling for the View Map link */
+.view-more {
+    color: #1a73e8; /* Blue color */
+    font-weight: bold;
+    text-decoration: none;
+    margin-right:10px;
+    font-size: 13px; /* Adjust to preferred size */
+}
+.services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 0px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-bottom:20px;
+}
+
+.service-card {
+    padding: 10px;
+    text-align: left;
+}
+
+.service-card img {
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: fill;
+    margin-bottom: 8px;
+}
+
+.service-card p {
+    font-weight: 600;
+    font-size: 13px;
+    color: #333;
+    margin: 5px 0 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.service-card span {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* Limit text and header to 10 characters */
+.service-card p, .service-card span {
+    display: inline-block;
+    max-width: 10ch;
+}
+
+ /* Bottom Navigation */
+ .bottom-nav {
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     padding: 12px 0;
+     background-color: #ffffff;
+     border-top: 1px solid #eee;
+ }
+
+ .nav-item {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     font-size: 12px;
+     color: #333;
+     text-decoration: none;
+ }
+
+ .nav-item img {
+     width: 24px;
+     height: 24px;
+     margin-bottom: 4px;
+ }
+
+ .nav-item.active {
+     color: #0072ff;
+     font-weight: bold;
+ }
