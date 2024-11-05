@@ -41,7 +41,7 @@ fun WebViewScreen(modifier: Modifier = Modifier) {
             WebView(context).apply {
                 webViewClient = WebViewClient() // Handle page navigation within WebView
                 settings.javaScriptEnabled = true // Enable JavaScript
-                loadUrl("file:///android_asset/maps-hospital-detailed-view.html") // Load the local HTML file
+                loadUrl("file:///android_asset/login-page.html") // Load the local HTML file
                 addJavascriptInterface(WebAppInterface(context), "Android") // Attach JavaScript interface
             }
         },

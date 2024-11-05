@@ -34,7 +34,7 @@ body {
 
 .map-header {
     font-size: 13px;
-    margin-bottom:8px;
+    margin-bottom: 8px;
 }
 
 .location-icon {
@@ -118,3 +118,123 @@ body {
      color: #0072ff;
      font-weight: bold;
  }
+
+/* Overlay and Popup Styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1000;
+}
+
+.drawer-popup {
+    background-color: white;
+    width: 100%;
+    max-height: 400px; /* Limit height of popup */
+    overflow-y: auto; /* Scroll if content exceeds */
+    border-radius: 10px 10px 0 0;
+    padding: 20px;
+}
+
+.close-btn {
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+}
+
+.mirror-bar {
+    width: 40px;
+    height: 4px;
+    background-color: #ccc;
+    border-radius: 2px;
+    margin: 10px auto;
+}
+
+.popup-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.popup-header h2{
+    font-size:15px;
+}
+
+
+.popup-header img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.services-offered {
+    font-weight: 400;
+    color:#666;
+    margin-bottom: 15px;
+}
+
+/* Service item styles */
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top:10px;
+    border-radius: 5px;
+}
+
+.service-name {
+    font-size: 14px;
+    font-weight:700;
+}
+
+.service-time {
+    font-size: 12px;
+    color: #888;
+}
+
+.price {
+    text-align: right;
+}
+
+.free {
+    color: green;
+}
+
+.mrp {
+    text-decoration: line-through;
+    font-size:12px;
+    color: red;
+}
+/* Close button for hiding the popup */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: #111;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Navigation Close Button inside header */
+.navigate-close-btn {
+    margin-left: auto;
+    font-size: 16px;
+    color: #888;
+    text-decoration: none;
+    background-color: transparent;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.navigate-close-btn:hover {
+    color: #333;
+}
