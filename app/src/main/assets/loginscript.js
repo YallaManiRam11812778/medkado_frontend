@@ -1,6 +1,6 @@
 // Function to check server status
 function checkServerStatus() {
-    const pingUrl = "http://192.168.1.228:8003/api/method/ping";
+    const pingUrl = "http://192.168.0.112:8003/api/method/ping";
 
     return fetch(pingUrl)
         .then(response => {
@@ -59,7 +59,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
     loader.style.display = "inline-block";
 
     // Prepare API parameters
-    const apiUrl = "http://192.168.1.228:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
+    const apiUrl = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
     const params = new URLSearchParams({
         email: username,
         password: password
