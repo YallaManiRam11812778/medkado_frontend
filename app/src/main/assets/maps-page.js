@@ -1,7 +1,7 @@
 function showPopup() {
-    document.getElementById('popupOverlay').classList.add('show');
+    document.getElementById("popupOverlay").style.display = "flex"; // Show overlay and popup
 }
 
 function hidePopup() {
-    document.getElementById('popupOverlay').classList.remove('show');
+    document.getElementById("popupOverlay").style.display = "none"; // Hide overlay and popup
 }

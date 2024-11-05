@@ -21,7 +21,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     loader.style.display = "inline-block";
 
     // Prepare API parameters
-    const apiUrl = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
+    const apiUrl = "http://192.168.1.228:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
     const params = new URLSearchParams({
         email: username,
         password: password

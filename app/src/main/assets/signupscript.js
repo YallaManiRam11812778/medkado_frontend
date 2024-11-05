@@ -21,7 +21,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     loader.style.display = "inline-block";
 
     // Prepare API parameters
-    const apiUrl = "http://192.168.0.112:8003/api/method/login";
+    const apiUrl = "http://192.168.1.228:8003/api/method/login";
     const params = new URLSearchParams({
         usr: username,
         pwd: password
