@@ -9,6 +9,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         // Show error messages for missing fields
         document.getElementById("username-error").style.display = username ? "none" : "block";
         document.getElementById("password-error").style.display = password ? "none" : "block";
+        showToast("Please enter both username and password.");
         return; // Exit if validation fails
     } else {
         // Hide any previous error messages if inputs are valid
@@ -19,7 +20,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     // Show loader
     const loader = document.querySelector(".loader");
     loader.style.display = "inline-block";
-//    const apiUrl = "http://192.168.1.228:8003/api/method/ping";
+
     // Prepare API parameters
     const apiUrl = "http://192.168.1.228:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
     const params = new URLSearchParams({
@@ -35,40 +36,42 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         }
     })
     .then(response => {
-        if (response.ok) { // Check for status code 200
+        if (response.ok) {
             return response.json();
         } else {
-            throw new Error("Failed to authenticate"); // Handle non-200 responses
+            throw new Error("Failed to authenticate");
         }
     })
     .then(data => {
         loader.style.display = "none"; // Hide loader
+
         // Check if the response indicates success
-        if (data.message.success) {
-            // Ensure authToken is available
-            const authToken = data.message && data.message.message ? data.message.message : null;
+        if (data.message && data.message.success) {
+            const authToken = data.message.message || null;
+
             if (authToken) {
-                // Check if Android interface is available, then send data to save
                 if (window.Android && window.Android.saveUserDetails) {
                     window.Android.saveUserDetails(JSON.stringify(authToken));
-                    window.location.href = "file:///android_asset/home-page.html";
+                    showToast("Login Successful!");
+                    setTimeout(() => {
+                        window.location.href = "file:///android_asset/home-page.html";
+                    }, 1000); // Redirect after showing toast
                 } else {
                     console.error("Android interface not available.");
                 }
             } else {
                 console.error("Authorization token is missing from the response.");
+                showToast("Authorization failed. Try again.");
             }
         } else {
-            // Handle cases where success is false
-            console.log(" login failed ======= ", data.message.message);
-            alert("Login failed: " + data.message);
+            console.log("Login failed:", data.message.message);
+            showToast("Login failed: " + (data.message.message || "Invalid credentials."));
         }
     })
     .catch(error => {
-        console.error('There was a problem with the login:', error);
-        loader.style.display = "none"; // Hide loader on error
-        // Optionally, display an error message to the user
-        alert("Login failed. Please check your credentials and try again.");
+        console.error("There was a problem with the login:", error);
+        loader.style.display = "none";
+        showToast("Login failed. Please check your credentials and try again.");
     });
 });
 
@@ -85,3 +88,13 @@ document.getElementById("toggle-password").addEventListener("click", function ()
         toggleButton.textContent = "Show";
     }
 });
+
+// Toast function
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000); // Toast duration: 3 seconds
+}
