@@ -81,8 +81,12 @@ body {
 
 /* Arrow icon style */
 .arrow-icon {
-    font-size: 16px;
+    font-size: 10px;
     color: #888;
+}
+.arrowimg{
+    width:20px;
+    height:20px;
 }
 
 /* Donut chart container */

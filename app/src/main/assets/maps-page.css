@@ -161,6 +161,10 @@ body {
     align-items: center;
     margin-bottom: 20px;
 }
+.popup-header h2{
+    font-size:15px;
+}
+
 
 .popup-header img {
     width: 40px;
@@ -204,5 +208,33 @@ body {
 
 .mrp {
     text-decoration: line-through;
+    font-size:12px;
     color: red;
+}
+/* Close button for hiding the popup */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: #111;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Navigation Close Button inside header */
+.navigate-close-btn {
+    margin-left: auto;
+    font-size: 16px;
+    color: #888;
+    text-decoration: none;
+    background-color: transparent;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.navigate-close-btn:hover {
+    color: #333;
 }

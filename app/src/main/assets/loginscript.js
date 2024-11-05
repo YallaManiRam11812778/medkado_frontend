@@ -19,7 +19,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     // Show loader
     const loader = document.querySelector(".loader");
     loader.style.display = "inline-block";
-
+//    const apiUrl = "http://192.168.1.228:8003/api/method/ping";
     // Prepare API parameters
     const apiUrl = "http://192.168.1.228:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
     const params = new URLSearchParams({

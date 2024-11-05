@@ -67,12 +67,19 @@
 <!-- Overlay and Bottom Drawer Popup -->
 <div class="overlay" id="popupOverlay">
     <div class="drawer-popup">
-        <i class="ri-close-line close-btn" onclick="hidePopup()"></i>
+        <!-- Close Button for Hiding the Popup -->
+        <button class="close-btn" onclick="hidePopup()">X</button>
+
         <div class="mirror-bar"></div>
+
         <div class="popup-header">
             <img src="balajihospital.png" alt="Hospital Logo">
             <h2>Balaji Hospitals</h2>
+
+            <!-- Navigation Link as a Close Button -->
+            <a href="maps-page.html" class="navigate-close-btn">Close</a>
         </div>
+
         <div class="services-offered">Service offered</div>
 
         <!-- Service items -->
@@ -99,5 +106,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
