@@ -1,4 +1,35 @@
-document.getElementById("login-form").addEventListener("submit", function(event) {
+// Function to check server status
+function checkServerStatus() {
+    const pingUrl = "http://192.168.0.112:8003/api/method/ping";
+
+    return fetch(pingUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Server is down");
+            }
+        })
+        .then(data => {
+            if (data && data.message === "pong") {
+                console.log("Server is reachable.");
+                return true; // Server is up
+            } else {
+                showToast("Server is down.");
+                return false; // Server is down
+            }
+        })
+        .catch(error => {
+            console.error("Error checking server status:", error);
+            showToast("Server is down.");
+            return false; // Server is down
+        });
+}
+
+// Check server status when the page loads
+window.addEventListener("load", checkServerStatus);
+
+document.getElementById("login-form").addEventListener("submit", async function(event) {
     event.preventDefault(); // Prevent form submission
 
     const username = document.getElementById("username").value;
@@ -9,6 +40,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         // Show error messages for missing fields
         document.getElementById("username-error").style.display = username ? "none" : "block";
         document.getElementById("password-error").style.display = password ? "none" : "block";
+        showToast("Please enter both username and password.");
         return; // Exit if validation fails
     } else {
         // Hide any previous error messages if inputs are valid
@@ -16,12 +48,18 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         document.getElementById("password-error").style.display = "none";
     }
 
+    // Check server status before proceeding with login
+    const isServerUp = await checkServerStatus();
+    if (!isServerUp) {
+        return; // Exit if server is down
+    }
+
     // Show loader
     const loader = document.querySelector(".loader");
     loader.style.display = "inline-block";
-//    const apiUrl = "http://192.168.1.228:8003/api/method/ping";
+
     // Prepare API parameters
-    const apiUrl = "http://192.168.1.228:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
+    const apiUrl = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
     const params = new URLSearchParams({
         email: username,
         password: password
@@ -35,40 +73,41 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         }
     })
     .then(response => {
-        if (response.ok) { // Check for status code 200
+        loader.style.display = "none"; // Hide loader
+        if (response.ok) {
             return response.json();
         } else {
-            throw new Error("Failed to authenticate"); // Handle non-200 responses
+            throw new Error("Failed to authenticate");
         }
     })
     .then(data => {
-        loader.style.display = "none"; // Hide loader
         // Check if the response indicates success
-        if (data.message.success) {
-            // Ensure authToken is available
-            const authToken = data.message && data.message.message ? data.message.message : null;
+        if (data.message && data.message.success) {
+            const authToken = data.message.message || null;
+
             if (authToken) {
-                // Check if Android interface is available, then send data to save
                 if (window.Android && window.Android.saveUserDetails) {
                     window.Android.saveUserDetails(JSON.stringify(authToken));
-                    window.location.href = "file:///android_asset/home-page.html";
+                    showToast("Login Successful!");
+                    setTimeout(() => {
+                        window.location.href = "file:///android_asset/home-page.html";
+                    }, 1000); // Redirect after showing toast
                 } else {
                     console.error("Android interface not available.");
                 }
             } else {
                 console.error("Authorization token is missing from the response.");
+                showToast("Authorization failed. Try again.");
             }
         } else {
-            // Handle cases where success is false
-            console.log(" login failed ======= ", data.message.message);
-            alert("Login failed: " + data.message);
+            console.log("Login failed:", data.message.message);
+            showToast("Login failed: " + (data.message.message || "Invalid credentials."));
         }
     })
     .catch(error => {
-        console.error('There was a problem with the login:', error);
-        loader.style.display = "none"; // Hide loader on error
-        // Optionally, display an error message to the user
-        alert("Login failed. Please check your credentials and try again.");
+        console.error("There was a problem with the login:", error);
+        loader.style.display = "none";
+        showToast("Login failed. Please check your credentials and try again.");
     });
 });
 
@@ -85,3 +124,13 @@ document.getElementById("toggle-password").addEventListener("click", function ()
         toggleButton.textContent = "Show";
     }
 });
+
+// Toast function
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000); // Toast duration: 3 seconds
+}
