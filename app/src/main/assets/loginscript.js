@@ -1,4 +1,35 @@
-document.getElementById("login-form").addEventListener("submit", function(event) {
+// Function to check server status
+function checkServerStatus() {
+    const pingUrl = "http://192.168.1.228:8003/api/method/ping";
+
+    return fetch(pingUrl)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Server is down");
+            }
+        })
+        .then(data => {
+            if (data && data.message === "pong") {
+                console.log("Server is reachable.");
+                return true; // Server is up
+            } else {
+                showToast("Server is down.");
+                return false; // Server is down
+            }
+        })
+        .catch(error => {
+            console.error("Error checking server status:", error);
+            showToast("Server is down.");
+            return false; // Server is down
+        });
+}
+
+// Check server status when the page loads
+window.addEventListener("load", checkServerStatus);
+
+document.getElementById("login-form").addEventListener("submit", async function(event) {
     event.preventDefault(); // Prevent form submission
 
     const username = document.getElementById("username").value;
@@ -15,6 +46,12 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         // Hide any previous error messages if inputs are valid
         document.getElementById("username-error").style.display = "none";
         document.getElementById("password-error").style.display = "none";
+    }
+
+    // Check server status before proceeding with login
+    const isServerUp = await checkServerStatus();
+    if (!isServerUp) {
+        return; // Exit if server is down
     }
 
     // Show loader
@@ -36,6 +73,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         }
     })
     .then(response => {
+        loader.style.display = "none"; // Hide loader
         if (response.ok) {
             return response.json();
         } else {
@@ -43,8 +81,6 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         }
     })
     .then(data => {
-        loader.style.display = "none"; // Hide loader
-
         // Check if the response indicates success
         if (data.message && data.message.success) {
             const authToken = data.message.message || null;
