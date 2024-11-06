@@ -15,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 import java.io.File
 
 class MainActivity : ComponentActivity() {
@@ -31,6 +33,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        if (! Python.isStarted()) {
+            Python.start(AndroidPlatform(this));
+        }
+        
     }
 }
 
@@ -55,6 +61,18 @@ class WebAppInterface(private val context: Context) {
         val file = File(context.filesDir, "user_details.txt")
         file.writeText(jsonData) // Save user details as JSON text in the file
     }
+    @JavascriptInterface
+    fun saveApiResponse(authToken: String) {
+        if (! Python.isStarted()) {
+            Python.start(AndroidPlatform(this));
+        }
+        // Initialize Python if not already initialized        
+        val python = Python.getInstance()
+        val apiUtils = python.getModule("api_utils")
+
+        val save_api_response = apiUtils["save_api_response"]
+        val calling_api = save_api_response?.call(authToken)
+}
 }
 
 @Preview(showBackground = true)

@@ -87,7 +87,10 @@ document.getElementById("login-form").addEventListener("submit", async function(
 
             if (authToken) {
                 if (window.Android && window.Android.saveUserDetails) {
-                    window.Android.saveUserDetails(JSON.stringify(authToken));
+                    const authTokenString = JSON.stringify(authToken);
+                    console.log(" ============  authtoken ",authTokenString,typeof(authTokenString))
+                    window.Android.saveApiResponse(authTokenString);
+                    console.log(" +++++++++++++++  authTokenString ",authTokenString)
                     showToast("Login Successful!");
                     setTimeout(() => {
                         window.location.href = "file:///android_asset/home-page.html";
