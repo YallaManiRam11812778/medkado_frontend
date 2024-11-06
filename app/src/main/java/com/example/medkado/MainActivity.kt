@@ -1,6 +1,5 @@
 package com.example.medkado
 
-import android.content.Context
 import android.os.Bundle
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -18,6 +17,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import java.io.File
+import android.content.Context
+import android.util.Log
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,10 +35,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        if (! Python.isStarted()) {
-            Python.start(AndroidPlatform(this));
-        }
-        
+                
     }
 }
 
@@ -61,24 +60,32 @@ class WebAppInterface(private val context: Context) {
         val file = File(context.filesDir, "user_details.txt")
         file.writeText(jsonData) // Save user details as JSON text in the file
     }
+
     @JavascriptInterface
     fun saveApiResponse(authToken: String) {
-        if (! Python.isStarted()) {
-            Python.start(AndroidPlatform(this));
-        }
-        // Initialize Python if not already initialized        
+
         val python = Python.getInstance()
         val apiUtils = python.getModule("api_utils")
+        val saveApiResponse_txt = apiUtils["save_api_response"]
+        val response = saveApiResponse_txt?.call(authToken)
+        Log.d("SaveApiResponse", "Response from Python: $response")
+    }
 
-        val save_api_response = apiUtils["save_api_response"]
-        val calling_api = save_api_response?.call(authToken)
-}
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WebViewPreview() {
-    MaterialTheme {
-        WebViewScreen()
+    @Composable
+    fun WebViewScreen(modifier: Modifier = Modifier) {
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    webViewClient = WebViewClient() // Handle page navigation within WebView
+                    settings.javaScriptEnabled = true // Enable JavaScript
+                    loadUrl("file:///android_asset/login-page.html") // Load the local HTML file
+                    addJavascriptInterface(
+                        WebAppInterface(context),
+                        "Android"
+                    ) // Attach JavaScript interface with correct context
+                }
+            },
+            modifier = modifier.fillMaxSize() // Fill the available screen size
+        )
     }
 }

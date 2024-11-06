@@ -17,9 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters += listOf("arm64-v8a", "x86_64")
-        }
+        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
 
     }
 
@@ -51,10 +49,9 @@ android {
 }
 
     chaquopy {
-        productFlavors {
-            getByName("py310") { version = "3.10" }
-            getByName("py311") { version = "3.11" }
-        }
+        defaultConfig { }
+        productFlavors { }
+        sourceSets { }
     }
 
     dependencies {
