@@ -76,16 +76,16 @@ class WebAppInterface(private val context: Context, private val webView: WebView
     }
 
     @JavascriptInterface
-    fun getApiResponse() {
+    fun getApiResponse():String {
         val python = Python.getInstance()
         val apiUtils = python.getModule("api_utils")
         val getApiResponseFunction = apiUtils["get_api_response"]
-        val responseForAuth = getApiResponseFunction?.call()        
+        val responseForAuth = getApiResponseFunction?.call()
         val responseString = responseForAuth.toString()
         val escapedResponse = escapeString(responseString)
-        Log.d("escapedResponse"," ################    $escapedResponse")
+        return escapedResponse
         // Use WebView to call a JavaScript function with the response
-        webView?.evaluateJavascript("javascript:handleApiResponse('$escapedResponse')", null)
+        //webView?.evaluateJavascript("javascript:handleApiResponse('$escapedResponse')", null)
     }
     // Function to escape special characters to prevent JavaScript errors
     private fun escapeString(input: String): String {

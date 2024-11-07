@@ -57,22 +57,25 @@ document.getElementById("exploreButton").addEventListener("click", async functio
    if (window.Android && window.Android.getApiResponse) {
     try {
       // Call the getApiResponse function from Kotlin
-      window.Android.getApiResponse();
+      const headers_with_tokens = window.Android.getApiResponse();
+      const cleanedHeaders = headers_with_tokens.replace(/\\'/g, '"');
+      const jsonified_headers = JSON.parse(cleanedHeaders)
     } catch (error) {
       console.error("Error in getting API response:", error);
     }
   }
 
   const isServerUp = await checkServerStatus();
-  console.log(" ==================  isServerUp:", isServerUp);
 
   // Hide the toast message after a timeout
   setTimeout(() => {
     toast.classList.remove("show");
-  }, 3000000);
+  }, 3000);
 
   if (!isServerUp) {
     return; // Exit if the server is down
+  } else {
+    "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_home_page.explore_plans"
   }
 
   // If the server is up, trigger further logic

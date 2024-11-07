@@ -13,5 +13,5 @@ def get_api_response():
     file_path = join(os.environ["HOME"], "user_details.txt")
     stored_auth = open(file_path, 'r').read()
     if "Authorization" not in stored_auth:
-        return {"success":False,"message":"Not logged in."}
-    return {"success":True,"message":stored_auth}
+        return False
+    return stored_auth
