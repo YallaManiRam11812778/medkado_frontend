@@ -19,11 +19,16 @@ import com.chaquo.python.android.AndroidPlatform
 import java.io.File
 import android.content.Context
 import android.util.Log
-
+import android.widget.Toast
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize Python if not already initialized
+        if (!Python.isStarted()) {
+            Python.start(AndroidPlatform(this))
+        }
 
         // Enable WebView debugging
         WebView.setWebContentsDebuggingEnabled(true)
@@ -35,7 +40,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-                
     }
 }
 
@@ -47,14 +51,15 @@ fun WebViewScreen(modifier: Modifier = Modifier) {
                 webViewClient = WebViewClient() // Handle page navigation within WebView
                 settings.javaScriptEnabled = true // Enable JavaScript
                 loadUrl("file:///android_asset/login-page.html") // Load the local HTML file
-                addJavascriptInterface(WebAppInterface(context), "Android") // Attach JavaScript interface
+                addJavascriptInterface(WebAppInterface(context, this), "Android") // Attach JavaScript interface
             }
         },
         modifier = modifier.fillMaxSize() // Fill the available screen size
     )
 }
 
-class WebAppInterface(private val context: Context) {
+class WebAppInterface(private val context: Context, private val webView: WebView) {
+
     @JavascriptInterface
     fun saveUserDetails(jsonData: String) {
         val file = File(context.filesDir, "user_details.txt")
@@ -63,29 +68,27 @@ class WebAppInterface(private val context: Context) {
 
     @JavascriptInterface
     fun saveApiResponse(authToken: String) {
-
         val python = Python.getInstance()
         val apiUtils = python.getModule("api_utils")
-        val saveApiResponse_txt = apiUtils["save_api_response"]
-        val response = saveApiResponse_txt?.call(authToken)
+        val saveApiResponseTxt = apiUtils["save_api_response"]
+        val response = saveApiResponseTxt?.call(authToken)
         Log.d("SaveApiResponse", "Response from Python: $response")
     }
 
-    @Composable
-    fun WebViewScreen(modifier: Modifier = Modifier) {
-        AndroidView(
-            factory = { context ->
-                WebView(context).apply {
-                    webViewClient = WebViewClient() // Handle page navigation within WebView
-                    settings.javaScriptEnabled = true // Enable JavaScript
-                    loadUrl("file:///android_asset/login-page.html") // Load the local HTML file
-                    addJavascriptInterface(
-                        WebAppInterface(context),
-                        "Android"
-                    ) // Attach JavaScript interface with correct context
-                }
-            },
-            modifier = modifier.fillMaxSize() // Fill the available screen size
-        )
+    @JavascriptInterface
+    fun getApiResponse() {
+        val python = Python.getInstance()
+        val apiUtils = python.getModule("api_utils")
+        val getApiResponseFunction = apiUtils["get_api_response"]
+        val responseForAuth = getApiResponseFunction?.call()        
+        val responseString = responseForAuth.toString()
+        val escapedResponse = escapeString(responseString)
+        Log.d("escapedResponse"," ################    $escapedResponse")
+        // Use WebView to call a JavaScript function with the response
+        webView?.evaluateJavascript("javascript:handleApiResponse('$escapedResponse')", null)
+    }
+    // Function to escape special characters to prevent JavaScript errors
+    private fun escapeString(input: String): String {
+        return input.replace("'", "\\'")
     }
 }

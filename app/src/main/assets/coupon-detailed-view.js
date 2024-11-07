@@ -1,3 +1,29 @@
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Function to update page content based on URL parameters
+function loadDynamicContent() {
+    const category = getQueryParam('category') || 'Diagnostics';
+    const coupons = getQueryParam('coupons') || '0';
+    const expiry = getQueryParam('expiry') || 'No expiration set';
+
+    // Update the header title and coupon info
+    document.getElementById('category-title').textContent = category;
+    document.getElementById('coupon-info').textContent = `x${coupons} coupons expire in ${expiry}`;
+}
+
+// Function to go back to the previous page
+function redirectToPage() {
+    window.history.back();
+}
+
+// Load dynamic content when the page loads
+window.onload = loadDynamicContent;
+
+
+
 // Fetch hospital data from the backend and render it
 async function fetchHospitals() {
     try {

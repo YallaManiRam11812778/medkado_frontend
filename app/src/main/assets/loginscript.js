@@ -1,6 +1,6 @@
 // Function to check server status
 function checkServerStatus() {
-  const pingUrl = "http://192.168.0.112:8003/api/method/ping";
+  const pingUrl = "http://192.168.1.228:8003/api/method/ping";
 
   return fetch(pingUrl)
     .then((response) => {
@@ -66,7 +66,7 @@ document
 
     // Prepare API parameters
     const apiUrl =
-      "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
+      "http://192.168.1.228:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.login_medkado";
     const params = new URLSearchParams({
       email: username,
       password: password,
@@ -101,13 +101,9 @@ document
                 typeof authTokenString
               );
               window.Android.saveApiResponse(authTokenString);
-              console.log(
-                " +++++++++++++++  authTokenString ",
-                authTokenString
-              );
               showToast("Login Successful!");
               setTimeout(() => {
-                window.location.href = "file:///android_asset/home-page.html";
+                window.location.href = "file:///android_asset/subscription-page.html";
               }, 1000); // Redirect after showing toast
             } else {
               console.error("Android interface not available.");

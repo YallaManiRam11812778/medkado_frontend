@@ -1,6 +1,6 @@
 import os
 from os.path import join
-from ast import literal_eval
+
 def save_api_response(authToken):
     """Saves the auth token to a file."""
     # file_path = join(dirname(__file__), "user_details.txt")
@@ -12,4 +12,6 @@ def save_api_response(authToken):
 def get_api_response():
     file_path = join(os.environ["HOME"], "user_details.txt")
     stored_auth = open(file_path, 'r').read()
-    return {"success":True,"message":literal_eval(stored_auth)}
+    if "Authorization" not in stored_auth:
+        return {"success":False,"message":"Not logged in."}
+    return {"success":True,"message":stored_auth}
