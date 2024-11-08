@@ -1,7 +1,6 @@
 // Function to check server status
 function checkServerStatus() {
   const pingUrl = "http://192.168.0.112:8003/api/method/ping";
-
   return fetch(pingUrl)
     .then((response) => {
       if (response.ok) {
@@ -103,7 +102,7 @@ document
               window.Android.saveApiResponse(authTokenString);
               showToast("Login Successful!");
               setTimeout(() => {
-                window.location.href = "file:///android_asset/subscription-page.html";
+                window.location.href = "file:///android_asset/home-page.html";
               }, 1000); // Redirect after showing toast
             } else {
               console.error("Android interface not available.");

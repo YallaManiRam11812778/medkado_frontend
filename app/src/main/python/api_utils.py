@@ -11,6 +11,8 @@ def save_api_response(authToken):
 
 def get_api_response():
     file_path = join(os.environ["HOME"], "user_details.txt")
+    if not os.path.exists(file_path):
+        with open(file_path,"w"):pass
     stored_auth = open(file_path, 'r').read()
     if "Authorization" not in stored_auth:
         return False
