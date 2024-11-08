@@ -38,7 +38,6 @@ document.getElementById("exploreButton").addEventListener("click", async functio
 
   // Check server status and get headers
   const headers = await checkServerStatus();
-  console.log("Header ==========  ", headers);
 
   if (!headers) {
     // Exit if the server is down or headers are not available
@@ -49,16 +48,21 @@ document.getElementById("exploreButton").addEventListener("click", async functio
       const exploreUrl = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_home_page.explore_plans";
       const exploreResponse = await fetch(exploreUrl, {
         method: "GET",
-        headers: headers, // Pass headers directly
+        headers: headers
       });
-
+      // Check if the response status is 401
+    if (exploreResponse.status === 401) {
+      // Redirect to login page if unauthorized
+      window.location.href = "file:///android_asset/login-page.html";
+      return; // Stop further execution
+  }
       const exploreData = await exploreResponse.json();
       if (exploreData.message.success) {
         const data_explored = exploreData.message.message
         console.log("Explore plans response:", data_explored);
         // Store the explore data in sessionStorage to access it on subscription.html
-        sessionStorage.setItem("explorePlans", data_explored);
-        // window.location.href = "file:///android_asset/subscription-page.html";
+        sessionStorage.setItem('explorePlans', JSON.stringify(data_explored));
+        window.location.href = "file:///android_asset/subscription-page.html";
       } else { return false
       }
       // Redirect to subscription.html after storing the data

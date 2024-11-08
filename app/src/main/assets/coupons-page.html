@@ -16,20 +16,10 @@
         <img class="gift-image" src="gift.png" alt="Gift Image">
     </div>
 
-    <div class="coupon-section">
-        {% for coupon in coupons_data %}
-        <div class="coupon-card">
-            <h2 class="coupon-title">{{ coupon.category }}</h2>
-            <p class="coupon-desc">{{ coupon.description }}</p>
-            <p class="coupon-details">x {{ coupon.count }} free coupons</p>
-            <p class="coupon-validity">Validity: {{ coupon.validity }}</p>
-            <button class="check-availability-btn"
-                    data-category="{{ coupon.category }}"
-                    data-coupons="{{ coupon.count }}">Check availability</button>
-        </div>
-        {% endfor %}
-    </div>
+    <!-- Coupon Section to be populated dynamically by JavaScript -->
+    <div class="coupon-section"></div>
 </div>
+
 <!-- Bottom Navigation -->
 <nav class="bottom-nav">
     <a href="home-page.html" class="nav-item">
