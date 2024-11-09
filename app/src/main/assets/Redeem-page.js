@@ -141,18 +141,25 @@ async function submitForm() {
   });
 
   try {
-    const response = await fetch(`${redeemCouponApiUrl}?${queryParams}`, {
+    const redeemcoupon_response = await fetch(`${redeemCouponApiUrl}?${queryParams}`, {
       method: "GET",
-      headers: 
-        headers
+      headers: headers
     });
-
-    const data = await response.json();
-    if (response.ok) {
-      console.log("Coupon redeemed successfully:", data);
+    if (redeemcoupon_response.status === 401) {
+      // Redirect to login page if unauthorized
+      window.location.href = "file:///android_asset/login-page.html";
+      return; // Stop further execution
+  }
+    const redeem_status_data = await redeemcoupon_response.json();
+    if (redeem_status_data.message.success) {
+      console.log("Coupon redeemed successfully:", redeem_status_data.message.message);
       closePopup();
+      window.location.href = "file:///android_asset/Redeem-page.html";
+      showToast(redeem_status_data.message.message)
     } else {
-      console.error("Error redeeming coupon:", data);
+      console.log("redeem_status_data.message.message",redeem_status_data.message.message)
+      showToast(redeem_status_data.message.message)
+      console.error("Error redeeming coupon:", redeem_status_data.message.message);
     }
   } catch (error) {
     console.error("Error during redeem:", error);
@@ -167,3 +174,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     fetchCouponData(headers);
   }
 });
+
+
+// Toast function
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000); // Toast duration: 3 seconds
+}
