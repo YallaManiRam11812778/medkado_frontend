@@ -7,7 +7,6 @@ async function checkServerStatus() {
     if (response.ok) {
       const data = await response.json();
       if (data && data.message === "pong") {
-        console.log("Server is reachable.");
 
         // Check if the Android interface is available
         if (window.Android && window.Android.getApiResponse) {
@@ -59,7 +58,6 @@ document.getElementById("exploreButton").addEventListener("click", async functio
       const exploreData = await exploreResponse.json();
       if (exploreData.message.success) {
         const data_explored = exploreData.message.message
-        console.log("Explore plans response:", data_explored);
         // Store the explore data in sessionStorage to access it on subscription.html
         sessionStorage.setItem('explorePlans', JSON.stringify(data_explored));
         window.location.href = "file:///android_asset/subscription-page.html";

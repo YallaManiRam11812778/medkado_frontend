@@ -1,6 +1,7 @@
 // Define the API endpoint for the coupons
 const couponsApiUrl = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.coupons_page";
-// Function to check server status and retrieve headers if server is up
+
+// Function to check server status and retrieve headers if the server is up
 async function checkServerStatus() {
   const pingUrl = "http://192.168.0.112:8003/api/method/ping";
 
@@ -9,8 +10,8 @@ async function checkServerStatus() {
     if (response.ok) {
       const data = await response.json();
       if (data && data.message === "pong") {
-        console.log("Server is reachable.");
-
+        
+        // Get API response headers with tokens if available
         if (window.Android && window.Android.getApiResponse) {
           const headersWithTokens = String(window.Android.getApiResponse());
           if (headersWithTokens.includes("Authorization")) {
@@ -49,7 +50,6 @@ async function fetchCouponData(headers) {
     const couponData = await response.json();
     if (couponData.message.success) {
       const coupons = couponData.message.message;
-      console.log("Coupon plans response:", coupons);
       displayCouponData(coupons);
     } else {
       console.error("Failed to fetch coupon data.");
@@ -64,6 +64,16 @@ function displayCouponData(coupons) {
   const couponSection = document.querySelector(".coupon-section");
   couponSection.innerHTML = ''; // Clear previous coupons
 
+  // Calculate the sum of available_number_of_coupons
+  const totalCouponsLeft = coupons.reduce((sum, coupon) => sum + coupon.available_number_of_coupons, 0);
+
+  // Update the total count in the specified span element
+  const couponCountSpan = document.querySelector('.container .header .coupon-count span');
+  if (couponCountSpan) {
+    couponCountSpan.textContent = `x ${totalCouponsLeft} free coupons`;
+  }
+
+  // Create individual coupon elements and append them to the coupon section
   coupons.forEach(coupon => {
     const couponCard = document.createElement("div");
     couponCard.classList.add("coupon-card");
@@ -73,48 +83,28 @@ function displayCouponData(coupons) {
     couponTitle.textContent = coupon.category;
     couponCard.appendChild(couponTitle);
 
-    const couponDesc = document.createElement("p");
-    couponDesc.classList.add("coupon-desc");
-    couponDesc.textContent = coupon.description;
-    couponCard.appendChild(couponDesc);
-
     const couponCount = document.createElement("p");
     couponCount.classList.add("coupon-details");
-    couponCount.textContent = `x ${coupon.count} free coupons`;
+    couponCount.textContent = `x ${coupon.available_number_of_coupons} free coupons`;
     couponCard.appendChild(couponCount);
-
-    const couponValidity = document.createElement("p");
-    couponValidity.classList.add("coupon-validity");
-    couponValidity.textContent = `Validity: ${coupon.validity}`;
-    couponCard.appendChild(couponValidity);
 
     const checkAvailabilityBtn = document.createElement("button");
     checkAvailabilityBtn.classList.add("check-availability-btn");
     checkAvailabilityBtn.textContent = "Check availability";
     checkAvailabilityBtn.setAttribute("data-category", coupon.category);
-    checkAvailabilityBtn.setAttribute("data-coupons", coupon.count);
+    checkAvailabilityBtn.setAttribute("data-coupons", coupon.available_number_of_coupons);
     couponCard.appendChild(checkAvailabilityBtn);
 
     couponSection.appendChild(couponCard);
   });
 }
-document.addEventListener('DOMContentLoaded', function () {
-  console.log('DOM fully loaded');
-  
-  const activeNavItem = document.querySelector('.nav-item.active');
-  console.log("activeNavItem ========= ",activeNavItem)
-  if (activeNavItem) {
-    activeNavItem.addEventListener("click", async function (event) {
-      event.preventDefault();  // Prevent default link behavior
-      console.log("OOOOOOOOOOOOOOOOOO"); // This will log when the link is clicked
 
-      // Check server status and get headers if server is up
-      const headers = await checkServerStatus();
-      if (headers) {
-        await fetchCouponData(headers); // Call the API if headers are retrieved
-      }
-    });
-  } else {
-    console.log('No active nav item found');
+// Event listener to load coupon data on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', async function () {
+  console.log('DOM fully loaded');
+
+  const headers = await checkServerStatus();
+  if (headers) {
+    fetchCouponData(headers); // Call the API if headers are retrieved
   }
 });
