@@ -47,8 +47,8 @@
 <!-- Popup Container -->
 <div id="popupContainer" class="popup-container" style="display: none;">
     <div class="popup-content">
-        <span class="close-popup" onclick="closePopup()">×</span>
         <h2>Redeem Coupon</h2>
+        <span class="close-popup" onclick="closePopup()">×</span>
         <form id="redeemForm">
             <label for="categoryInput">Category:</label>
             <input type="text" id="categoryInput" readonly /> <!-- Read-only for category -->
@@ -56,8 +56,8 @@
             <label for="couponsInput">Available Coupons:</label>
             <input type="text" id="couponsInput" readonly /> <!-- Read-only for available coupons -->
 
-            <label for="inputField">Enter Coupon Code:</label>
-            <input type="text" id="inputField" placeholder="Enter hospital code" />
+            <label for="inputField">Hospital Code:</label>
+            <input type="text" id="inputField" placeholder="Enter code" />
             
             <div class="popup-footer">
                 <button type="button" onclick="submitForm()">Redeem</button>

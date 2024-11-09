@@ -153,10 +153,11 @@ async function submitForm() {
     const redeem_status_data = await redeemcoupon_response.json();
     if (redeem_status_data.message.success) {
       console.log("Coupon redeemed successfully:", redeem_status_data.message.message);
+      showToast(redeem_status_data.message.message)
       closePopup();
       window.location.href = "file:///android_asset/Redeem-page.html";
-      showToast(redeem_status_data.message.message)
     } else {
+      closePopup();
       console.log("redeem_status_data.message.message",redeem_status_data.message.message)
       showToast(redeem_status_data.message.message)
       console.error("Error redeeming coupon:", redeem_status_data.message.message);
