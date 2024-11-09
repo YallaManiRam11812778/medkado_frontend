@@ -13,37 +13,16 @@
     <div class="header">
         <div class="text-in-header">
             <p class="map-header">Maps</p>
-            <p class="district-title">Ranga Reddy district</p>
         </div>
         <img class="location-icon" src="location-icon.png" alt="Location Icon">
     </div>
 
-    <div class="hospital-list">
-        <div class="hospital-card">
-            <img class="hospital-logo" src="balajihospital.png" alt="Balaji Logo">
-            <h2 class="hospital-name">Balaji Hospitals</h2>
-            <p class="hospital-address">Bhimavaram junction, Tadepalli gudem, Ganavara...</p>
-            <button class="view-location-btn">View location</button>
-            <button class="view-services-btn" onclick="showPopup()">View services</button> <!-- Updated to show popup -->
-        </div>
-
-        <div class="hospital-card">
-            <img class="hospital-logo" src="starmedical.png" alt="Medicover Logo">
-            <h2 class="hospital-name">Medicover hospitals</h2>
-            <p class="hospital-address">Bhimavaram junction, Tadepalli gudem, Ganavara...</p>
-            <button class="view-location-btn">View location</button>
-            <button class="view-services-btn" onclick="showPopup()">View services</button> <!-- Updated to show popup -->
-        </div>
-
-        <div class="hospital-card">
-            <img class="hospital-logo" src="vijayhospital.png" alt="KIMS Logo">
-            <h2 class="hospital-name">KIMS</h2>
-            <p class="hospital-address">Bhimavaram junction, Tadepalli gudem, Ganavara...</p>
-            <button class="view-location-btn">View location</button>
-            <button class="view-services-btn" onclick="showPopup()">View services</button> <!-- Updated to show popup -->
-        </div>
+    <!-- Container for the hospital list -->
+    <div class="hospital-list" id="hospitalList">
+        <!-- Hospital cards will be rendered dynamically here by JavaScript -->
     </div>
 </div>
+
 <!-- Bottom Navigation -->
 <nav class="bottom-nav">
     <a href="home-page.html" class="nav-item">
@@ -67,49 +46,6 @@
         <span>Account</span>
     </a>
 </nav>
-
-<!-- Overlay and Bottom Drawer Popup -->
-<div class="overlay" id="popupOverlay">
-    <div class="drawer-popup">
-        <!-- Close Button for Hiding the Popup -->
-        <button class="close-btn" onclick="hidePopup()">X</button>
-
-        <div class="mirror-bar"></div>
-
-        <div class="popup-header">
-            <img src="balajihospital.png" alt="Hospital Logo">
-            <h2>Balaji Hospitals</h2>
-
-            <!-- Navigation Link as a Close Button -->
-            <a href="maps-page.html" class="navigate-close-btn">Close</a>
-        </div>
-
-        <div class="services-offered">Service offered</div>
-
-        <!-- Service items -->
-        <div class="service-item">
-            <div>
-                <p class="service-name">Diagnosis</p>
-                <p class="service-time">Reports in 15 hrs</p>
-            </div>
-            <div class="price">
-                <p class="free">Free</p>
-                <p class="mrp">MRP ₹390</p>
-            </div>
-        </div>
-
-        <div class="service-item">
-            <div>
-                <p class="service-name">Ayurvedic</p>
-                <p class="service-time">Reports in 15 hrs</p>
-            </div>
-            <div class="price">
-                <p class="free">Free</p>
-                <p class="mrp">MRP ₹390</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>

@@ -35,12 +35,12 @@ body {
 
 .map-header {
     font-size: 13px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 }
 
 .location-icon {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     position: absolute;
     right: 20px;
     top: 20px;
@@ -49,7 +49,7 @@ body {
 .hospital-list {
     padding: 20px 0;
     background-color: #fafafa;
-    margin-bottom: 72px;
+    margin-bottom: 24px;
 }
 
 .hospital-card {
@@ -67,7 +67,7 @@ body {
 
 .hospital-name {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .hospital-address {
@@ -76,15 +76,7 @@ body {
     margin-top: 0px;
 }
 
-.view-location-btn, .view-services-btn {
-    background-color: #fff;
-    color: #4461F2;
-    border: none;
-    padding: 1px 20px 1px 0px;
-    margin-top: 10px;
-    cursor: pointer;
-    text-align: left;
-}
+
 
 /* Bottom Navigation */
 .bottom-nav {
@@ -231,4 +223,48 @@ body {
 
 .navigate-close-btn:hover {
     color: #333;
+}
+.hospital-card {
+    border: 1px solid #ddd; /* Optional: Add border around the card */
+    padding: 20px;
+    margin: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hospital-details {
+    display: flex;
+    justify-content: space-between; /* Align the name and short name box */
+    align-items: center;
+}
+
+.hospital-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.view-location-btn {
+    font-size: 12px;
+    font-weight: 800;
+    background-color: none;
+    margin-top: 6px;
+    color: rgb(36, 0, 197);
+    text-align: left;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+
+.coupons-list {
+    margin-top: 10px;
+}
+
+.category-item {
+    background-color: #fafafa;
+    padding: 5px 2px;
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
