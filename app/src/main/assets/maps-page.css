@@ -11,19 +11,20 @@ body {
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-.container {
-    max-width: 100%; /* Ensures responsiveness */
-    padding: 0 16px;
-    background-color: #F2F2F2;
-}
-
 .header {
     background-color: #fff;
     padding: 20px;
-    border-bottom: 1px solid #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    z-index: 1;
+}
+
+.text-in-header {
+    display: flex;
+    flex-direction: column;
 }
 
 .district-title {
@@ -72,7 +73,6 @@ body {
 .hospital-address {
     font-size: 14px;
     color: #888;
-    display: inline-block;
     margin-top: 0px;
 }
 
@@ -83,41 +83,42 @@ body {
     padding: 1px 20px 1px 0px;
     margin-top: 10px;
     cursor: pointer;
+    text-align: left;
 }
 
- /* Bottom Navigation */
- .bottom-nav {
-     position: fixed;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     display: flex;
-     justify-content: space-around;
-     align-items: center;
-     padding: 12px 0;
-     background-color: #ffffff;
-     border-top: 1px solid #eee;
- }
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    background-color: #ffffff;
+    border-top: 1px solid #eee;
+}
 
- .nav-item {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     font-size: 12px;
-     color: #333;
-     text-decoration: none;
- }
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+}
 
- .nav-item img {
-     width: 24px;
-     height: 24px;
-     margin-bottom: 4px;
- }
+.nav-item img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+}
 
- .nav-item.active {
-     color: #0072ff;
-     font-weight: bold;
- }
+.nav-item.active {
+    color: #0072ff;
+    font-weight: bold;
+}
 
 /* Overlay and Popup Styles */
 .overlay {
@@ -146,6 +147,11 @@ body {
     font-size: 24px;
     color: #888;
     cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
 }
 
 .mirror-bar {
@@ -161,10 +167,10 @@ body {
     align-items: center;
     margin-bottom: 20px;
 }
-.popup-header h2{
-    font-size:15px;
-}
 
+.popup-header h2 {
+    font-size: 15px;
+}
 
 .popup-header img {
     width: 40px;
@@ -174,7 +180,7 @@ body {
 
 .services-offered {
     font-weight: 400;
-    color:#666;
+    color: #666;
     margin-bottom: 15px;
 }
 
@@ -184,13 +190,13 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    margin-top:10px;
+    margin-top: 10px;
     border-radius: 5px;
 }
 
 .service-name {
     font-size: 14px;
-    font-weight:700;
+    font-weight: 700;
 }
 
 .service-time {
@@ -208,19 +214,8 @@ body {
 
 .mrp {
     text-decoration: line-through;
-    font-size:12px;
+    font-size: 12px;
     color: red;
-}
-/* Close button for hiding the popup */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    background: #111;
-    color: #fff;
-    border: none;
-    cursor: pointer;
 }
 
 /* Navigation Close Button inside header */
@@ -232,7 +227,6 @@ body {
     background-color: transparent;
     padding: 5px 10px;
     cursor: pointer;
-    display: inline-block;
 }
 
 .navigate-close-btn:hover {

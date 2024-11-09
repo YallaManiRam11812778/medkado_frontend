@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Coupons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Redeem-page.css">
+</head>
+<body>
+
+<!-- Header Section -->
+<div class="header">
+    <div class="text-in-header">
+        <p class="map-header">Redeem</p>
+        <p class="district-title">by selecting coupon</p>
+    </div>
+</div>
+
+<!-- Coupon Section to be populated dynamically by JavaScript -->
+<div class="coupon-section"></div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+    <a href="home-page.html" class="nav-item">
+        <img src="homeoutline.png" alt="Home Icon">
+        <span>Home</span>
+    </a>
+    <a href="coupons-page.html" class="nav-item">
+        <img src="couponoutline.png" alt="Coupons Icon">
+        <span>Coupons</span>
+    </a>
+    <a href="Redeem-page.html" class="nav-item active">
+        <img src="Redeemfilled.png" alt="Scanner Icon">
+        <span>Redeem</span>
+    </a>
+    <a href="maps-page.html" class="nav-item">
+        <img src="mapoutline.png" alt="Maps Icon">
+        <span>Maps</span>
+    </a>
+    <a href="account-page.html" class="nav-item">
+        <img src="accountoutline.png" alt="Account Icon">
+        <span>Account</span>
+    </a>
+</nav>
+
+<!-- Popup Container -->
+<div id="popupContainer" class="popup-container" style="display: none;">
+    <div class="popup-content">
+        <span class="close-popup" onclick="closePopup()">×</span>
+        <h2>Redeem Coupon</h2>
+        <form id="redeemForm">
+            <label for="categoryInput">Category:</label>
+            <input type="text" id="categoryInput" readonly /> <!-- Read-only for category -->
+            
+            <label for="couponsInput">Available Coupons:</label>
+            <input type="text" id="couponsInput" readonly /> <!-- Read-only for available coupons -->
+
+            <label for="inputField">Enter Coupon Code:</label>
+            <input type="text" id="inputField" placeholder="Enter hospital code" />
+            
+            <div class="popup-footer">
+                <button type="button" onclick="submitForm()">Redeem</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="Redeem-page.js"></script>
+</body>
+</html>
