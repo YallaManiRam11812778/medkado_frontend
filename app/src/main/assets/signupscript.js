@@ -1,52 +1,48 @@
 // Function to fetch district options from the backend
 async function fetchDistricts() {
   try {
-      const response = await fetch('http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.locations_dropdown', { method: "GET" });
-      const data = await response.json();
-      if (data.message && data.message.message) {
-          const districts = data.message.message;
-          // Store the explore data in sessionStorage to access it on subscription.html
-          sessionStorage.setItem('locations_dropdown', JSON.stringify(districts));
-          const districtSelect = document.getElementById('country');          
-          // Clear existing options but retain the placeholder
-          districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
-          // Add options to the select element dynamically
-          districts.forEach(district => {
-              const option = document.createElement('option');
-              option.value = district.id; // Assuming each district has an id
-              option.textContent = district.name; // Assuming each district has a name
-              districtSelect.appendChild(option);
-          });
-      } else {
-          console.error('No districts available or invalid response format');
-          return false;
-      }
+    const response = await fetch('http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.locations_dropdown', { method: "GET" });
+    const data = await response.json();
+    if (data.message && data.message.message) {
+      const districts = data.message.message;
+      console.log(JSON.stringify(districts), "$*************");
+
+      // Store the explore data in sessionStorage to access it on subscription.html
+      sessionStorage.setItem('locations_dropdown', JSON.stringify(districts));
+      const districtSelect = document.getElementById('country');
+
+      // Clear existing options but retain the placeholder
+      districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+
+      // Add options to the select element dynamically
+      districts.forEach(district => {
+        const option = document.createElement('option');
+        option.value = district.name; // Set option value to district name
+        option.textContent = district.name; // Display district name
+        districtSelect.appendChild(option);
+      });
+    } else {
+      console.error('No districts available or invalid response format');
+      return false;
+    }
   } catch (error) {
-      console.error('Error fetching district options:', error);
+    console.error('Error fetching district options:', error);
   }
 }
 
 function validateEmail(email) {
-  // Check if email exists
   if (email) {
-      // Define a regular expression to match valid email format
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|email)\.com$/;
-      const generalPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-      // Check if email matches specific domains
-      if (emailPattern.test(email)) {
-          return true
-      } 
-      // Check for general email format
-      else if (generalPattern.test(email)) {
-          showToast("Valid email format, but not an approved domain.");
-          return false
-      } 
-      // If email doesn't match any pattern
-      else {
-          showToast("Invalid email format.");
-          return false
-      }
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|email)\.com$/;
+    const generalPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailPattern.test(email)) {
+      return true
+    } else if (generalPattern.test(email)) {
+      showToast("Valid email format, but not an approved domain.");
+      return false
+    } else {
+      showToast("Invalid email format.");
+      return false
+    }
   }
 }
 
@@ -59,7 +55,8 @@ document.getElementById('Signup-form').addEventListener('submit', async (event) 
   const mobileNumber = document.getElementById('mobile_num').value;
   const referralCode = document.getElementById('referral').value;
   const district = document.getElementById('country').value;
-  // Basic client-side validation
+  console.log("email === ", email, "pass", password, "mobile_num", mobileNumber, "refe", referralCode, "distr", district);
+
   if (!email) {
     showToast('Email is required');
     alert('Email is required');
@@ -71,21 +68,16 @@ document.getElementById('Signup-form').addEventListener('submit', async (event) 
     alert('Password is required');
     return;
   }
-  
   if (mobileNumber.length !== 10) {
     showToast('Mobile number must be 10 digits');
-  alert('Mobile number must be 10 digits');
-  return;
-}
-
-if (!district) {
-  showToast('Please select a district');
-  alert('Please select a district');
-  return;
-}
-
-console.log("email === ",email,"pass",password,"mobile_num",mobileNumber,"refe",referralCode,"distr",district)
-
+    alert('Mobile number must be 10 digits');
+    return;
+  }
+  if (!district) {
+    showToast('Please select a district');
+    alert('Please select a district');
+    return;
+  }
   try {
     const response = await fetch(
       `http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.sign_up?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&mobile_no=${encodeURIComponent(mobileNumber)}&referral_code=${encodeURIComponent(referralCode)}&district=${encodeURIComponent(district)}`,
@@ -104,10 +96,6 @@ console.log("email === ",email,"pass",password,"mobile_num",mobileNumber,"refe",
           if (authToken) {
             if (window.Android && window.Android.saveUserDetails) {
               const authTokenString = JSON.stringify(authToken);
-              console.log(
-                authTokenString,
-                typeof authTokenString
-              );
               window.Android.saveApiResponse(authTokenString);
               showToast("SignUp Successful!");
               setTimeout(() => {
@@ -125,31 +113,30 @@ console.log("email === ",email,"pass",password,"mobile_num",mobileNumber,"refe",
   }
 });
 
-
 // Function to toggle password visibility
 document.getElementById('toggle-password').addEventListener('click', () => {
-    const passwordField = document.getElementById('password');
-    const toggleButton = document.getElementById('toggle-password');
-
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        toggleButton.textContent = 'Hide';
-    } else {
-        passwordField.type = 'password';
-        toggleButton.textContent = 'Show';
-    }
+  const passwordField = document.getElementById('password');
+  const toggleButton = document.getElementById('toggle-password');
+  if (passwordField.type === 'password') {
+    passwordField.type = 'text';
+    toggleButton.textContent = 'Hide';
+  } else {
+    passwordField.type = 'password';
+    toggleButton.textContent = 'Show';
+  }
 });
 
 // Function to limit mobile number length
 document.getElementById('mobile_num').addEventListener('input', function () {
-    const maxLength = 10;
-    if (this.value.length > maxLength) {
-        this.value = this.value.slice(0, maxLength);
-    }
+  const maxLength = 10;
+  if (this.value.length > maxLength) {
+    this.value = this.value.slice(0, maxLength);
+  }
 });
 
 // Fetch districts on page load
 window.addEventListener('load', fetchDistricts);
+
 // Toast function
 function showToast(message) {
   const toast = document.getElementById("toast");

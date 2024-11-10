@@ -94,10 +94,6 @@ document
           if (authToken) {
             if (window.Android && window.Android.saveUserDetails) {
               const authTokenString = JSON.stringify(authToken);
-              console.log(
-                authTokenString,
-                typeof authTokenString
-              );
               window.Android.saveApiResponse(authTokenString);
               showToast("Login Successful!");
               setTimeout(() => {
