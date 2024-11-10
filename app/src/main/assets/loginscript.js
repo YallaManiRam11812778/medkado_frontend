@@ -95,7 +95,6 @@ document
             if (window.Android && window.Android.saveUserDetails) {
               const authTokenString = JSON.stringify(authToken);
               console.log(
-                " ============  authtoken ",
                 authTokenString,
                 typeof authTokenString
               );
