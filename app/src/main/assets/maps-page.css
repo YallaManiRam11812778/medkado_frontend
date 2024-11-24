@@ -34,15 +34,17 @@ body {
 }
 
 .map-header {
-    font-size: 13px;
-    margin-bottom: 2px;
+    font-size: 15px;
+    font-weight:700;
+    margin-top:2px;
+    margin-left:30px;
 }
 
 .location-icon {
     width: 24px;
     height: 24px;
     position: absolute;
-    right: 20px;
+    left: 20px;
     top: 20px;
 }
 
@@ -267,4 +269,63 @@ body {
     padding: 5px 2px;
     margin-bottom: 5px;
     border-radius: 5px;
+}
+
+
+/* Dropdown container */
+.dropdown-container {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Label for the dropdown */
+.dropdown-container label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+/* Style for the select dropdown */
+.district-dropdown {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+    appearance: none; /* Removes default dropdown arrow in some browsers */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Style for the dropdown option items */
+.district-dropdown option {
+    padding: 10px;
+}
+
+/* Dropdown hover effect */
+.district-dropdown:hover {
+    border-color: #4CAF50;
+}
+
+/* Focus effect when the dropdown is clicked */
+.district-dropdown:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.no-services-message {
+    text-align: center; /* Center the text horizontally */
+    font-size: 14px; /* Reduced font size */
+    color: #888; /* Gray color */
+    padding: 20px;
+    margin-top: 50px; /* Optional: Adjusts the vertical alignment */
+    display: block;
+    width: 100%;
+    height: 100%; /* Ensures it takes up the full container height */
+    line-height: 1.5; /* Adjust line height for better spacing */
 }

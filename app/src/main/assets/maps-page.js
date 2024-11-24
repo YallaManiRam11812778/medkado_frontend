@@ -32,10 +32,10 @@ async function fetchDistricts() {
 async function fetchHospitalDataForDistrict(selectedDistrict, headers) {
     try {
         const mapsPageUrl = selectedDistrict
-    ? `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page?location=${encodeURIComponent(selectedDistrict)}`
-    : `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page`;
+            ? `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page?location=${encodeURIComponent(selectedDistrict)}`
+            : `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page`;
 
-            const mapsPageResponse = await fetch(mapsPageUrl, {
+        const mapsPageResponse = await fetch(mapsPageUrl, {
             method: "GET",
             headers: headers,
         });
@@ -58,21 +58,30 @@ async function fetchHospitalDataForDistrict(selectedDistrict, headers) {
 
             hospitalListContainer.innerHTML = ''; // Clear the container before adding new items
 
-            dataExplored.forEach(hospital => {
-                const hospitalCard = document.createElement('div');
-                hospitalCard.classList.add('hospital-card');
+            if (dataExplored.length === 0) {
+                // Display message if no hospitals are found
+                const noServicesMessage = document.createElement('p');
+                noServicesMessage.textContent = 'No services available for the selected district.';
+                noServicesMessage.classList.add('no-services-message');
+                hospitalListContainer.appendChild(noServicesMessage);
+            } else {
+                // Render hospital cards if data is available
+                dataExplored.forEach(hospital => {
+                    const hospitalCard = document.createElement('div');
+                    hospitalCard.classList.add('hospital-card');
 
-                // Create hospital card with dynamic data
-                hospitalCard.innerHTML = `
-                    <h2 class="hospital-name">${hospital.hospital_name}</h2>
-                    <a class="view-location-btn" href="${hospital.location}" target="_blank">View location</a>
-                    <div class="coupons-list">
-                        ${hospital.category.map(category => `<p class="category-item">&#10003 ${category}</p>`).join('')}
-                    </div>
-                `;
+                    // Create hospital card with dynamic data
+                    hospitalCard.innerHTML = `
+                        <h2 class="hospital-name">${hospital.hospital_name}</h2>
+                        <a class="view-location-btn" href="${hospital.location}" target="_blank">View location</a>
+                        <div class="coupons-list">
+                            ${hospital.category.map(category => `<p class="category-item">&#10003 ${category}</p>`).join('')}
+                        </div>
+                    `;
 
-                hospitalListContainer.appendChild(hospitalCard);
-            });
+                    hospitalListContainer.appendChild(hospitalCard);
+                });
+            }
         } else {
             console.error("Invalid response structure or empty data:", exploreData);
         }
@@ -138,14 +147,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error("Dropdown element #country not found in the DOM");
     }
 
-    // Trigger fetching hospitals when location icon is clicked
-    const locationIcon = document.querySelector('.location-icon');
-    if (locationIcon) {
-        locationIcon.addEventListener('click', async () => {
-            const selectedDistrict = districtSelect ? districtSelect.value : null;
-            await fetchHospitalDataForDistrict(selectedDistrict, headers);
-        });
-    } else {
-        console.error("Location icon not found in the DOM");
-    }
+//    // Trigger fetching hospitals when location icon is clicked
+//    const locationIcon = document.querySelector('.location-icon');
+//    if (locationIcon) {
+//        locationIcon.addEventListener('click', async () => {
+//            const selectedDistrict = districtSelect ? districtSelect.value : null;
+//            await fetchHospitalDataForDistrict(selectedDistrict, headers);
+//        });
+//    } else {
+//        console.error("Location icon not found in the DOM");
+//    }
 });

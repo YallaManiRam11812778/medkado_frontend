@@ -516,3 +516,11 @@ body {
      color: #0072ff;
      font-weight: bold;
  }
+
+ .coupon-count {
+   font-size: 24px; /* Large font size */
+   font-weight: bold; /* Bolder text */
+   color: #0072ff; /* Blue color for emphasis */
+   text-align: center; /* Center-align text if needed */
+   margin-top: 2px; /* Optional spacing */
+ }
