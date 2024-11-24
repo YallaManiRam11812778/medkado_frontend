@@ -1,6 +1,6 @@
 // Function to check server status and get API response if server is up
 async function checkServerStatus() {
-    const pingUrl = "http://192.168.0.112:8003/api/method/ping";
+    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
 
     try {
         const response = await fetch(pingUrl);
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const maps_page_Url = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page";
+        const maps_page_Url = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page";
         const maps_page_Url_Response = await fetch(maps_page_Url, {
             method: "GET",
             headers: headers

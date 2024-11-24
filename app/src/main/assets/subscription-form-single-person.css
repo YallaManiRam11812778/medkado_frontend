@@ -1,32 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
+/* Reset and body styling */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
+
 body {
     background-color: #f4f5f7;
+    color: #333;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
 }
 
-.container {
-    width: 90%;
-    max-width: 400px;
-    margin-top:20px;
+/* Header with back button and title */
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .back-button {
-    display: inline-block;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #000;
+    font-size: 24px;
+    color: #333;
+    margin-right: 10px;
     text-decoration: none;
+    cursor: pointer;
 }
 
+.back-button:hover {
+    color: #007bff;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Form container */
+.container {
+    width: 90%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+/* Form fields */
 form {
     display: flex;
     flex-direction: column;
@@ -34,9 +63,7 @@ form {
 
 label {
     font-size: 14px;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    color: #333;
+    margin: 15px 0 5px;
 }
 
 input, select {
@@ -47,6 +74,15 @@ input, select {
     margin-bottom: 15px;
 }
 
+/* Section title styling */
+h4 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* Submit button */
 .submit-button {
     padding: 15px;
     font-size: 16px;

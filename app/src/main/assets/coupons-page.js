@@ -1,9 +1,9 @@
 // Define the API endpoint for the coupons
-const couponsApiUrl = "http://192.168.0.112:8003/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.coupons_page";
+const couponsApiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.coupons_page";
 
 // Function to check server status and retrieve headers if the server is up
 async function checkServerStatus() {
-  const pingUrl = "http://192.168.0.112:8003/api/method/ping";
+  const pingUrl = "http://192.168.0.121:8003/api/method/ping";
 
   try {
     const response = await fetch(pingUrl);
@@ -88,12 +88,12 @@ function displayCouponData(coupons) {
     couponCount.textContent = `x ${coupon.available_number_of_coupons} free coupons`;
     couponCard.appendChild(couponCount);
 
-    const checkAvailabilityBtn = document.createElement("button");
-    checkAvailabilityBtn.classList.add("check-availability-btn");
-    checkAvailabilityBtn.textContent = "Check availability";
-    checkAvailabilityBtn.setAttribute("data-category", coupon.category);
-    checkAvailabilityBtn.setAttribute("data-coupons", coupon.available_number_of_coupons);
-    couponCard.appendChild(checkAvailabilityBtn);
+    // const checkAvailabilityBtn = document.createElement("button");
+    // checkAvailabilityBtn.classList.add("check-availability-btn");
+    // checkAvailabilityBtn.textContent = "Check availability";
+    // checkAvailabilityBtn.setAttribute("data-category", coupon.category);
+    // checkAvailabilityBtn.setAttribute("data-coupons", coupon.available_number_of_coupons);
+    // couponCard.appendChild(checkAvailabilityBtn);
 
     couponSection.appendChild(couponCard);
   });

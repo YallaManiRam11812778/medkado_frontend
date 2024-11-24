@@ -1,7 +1,7 @@
 // Function to fetch district options from the backend
 async function fetchDistricts() {
   try {
-    const response = await fetch('http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.locations_dropdown', { method: "GET" });
+    const response = await fetch('http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.locations_dropdown', { method: "GET" });
     const data = await response.json();
     if (data.message && data.message.message) {
       const districts = data.message.message;
@@ -80,7 +80,7 @@ document.getElementById('Signup-form').addEventListener('submit', async (event) 
   }
   try {
     const response = await fetch(
-      `http://192.168.0.112:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.sign_up?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&mobile_no=${encodeURIComponent(mobileNumber)}&referral_code=${encodeURIComponent(referralCode)}&district=${encodeURIComponent(district)}`,
+      `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.sign_up?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&mobile_no=${encodeURIComponent(mobileNumber)}&referral_code=${encodeURIComponent(referralCode)}&district=${encodeURIComponent(district)}`,
       {
         method: 'GET',
         headers: {

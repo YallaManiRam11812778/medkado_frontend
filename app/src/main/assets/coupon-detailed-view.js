@@ -27,7 +27,7 @@ window.onload = loadDynamicContent;
 // Fetch hospital data from the backend and render it
 async function fetchHospitals() {
     try {
-        const response = await fetch("http://127.0.0.1:8000/hospitals");
+        const response = await fetch("http://192.168.0.121:8003/hospitals");
         const hospitals = await response.json();
 
         const hospitalList = document.getElementById("hospital-list");
