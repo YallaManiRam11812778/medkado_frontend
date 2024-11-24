@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Create hospital card with dynamic data
                 hospitalCard.innerHTML = `
                     <h2 class="hospital-name">${hospital.hospital_name}</h2>
-                    <a class="view-location-btn" href="${hospital.location}" target="_blank">View location</a>
+                    <a class="view-location-btn"  href="${hospital.location}" target="_blank">View location</a>
                     <div class="coupons-list">
                         ${hospital.category.map(category => `<p class="category-item">&#10003 ${category}</p>`).join('')}
                     </div>
