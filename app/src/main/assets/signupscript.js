@@ -28,7 +28,7 @@ async function fetchDistricts() {
   } catch (error) {
     console.error('Error fetching district options:', error);
   }
-}y7
+}
 
 function validateEmail(email) {
   if (email) {

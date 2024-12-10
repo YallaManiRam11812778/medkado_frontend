@@ -1,36 +1,69 @@
+// forgot-password.js
 document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
 
-    const mobileDigits = document.getElementById('mobileDigits').value.trim();
-    const birthDate = document.getElementById('birthDate').value.trim();
-    const mobileError = document.getElementById('mobileError');
-    const birthDateError = document.getElementById('birthDateError');
-    const errorMessage = document.getElementById('error-message');
+    const email = document.getElementById('email').value.trim();
+    const phoneDigits = document.getElementById('phoneDigits').value.trim();
+    const newPassword = document.getElementById('newPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    const emailError = document.getElementById('emailError');
+    const phoneDigitsError = document.getElementById('phoneDigitsError');
+    const passwordError = document.getElementById('passwordError');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    const successMessage = document.getElementById('successMessage');
+
+    const changePasswordSection = document.getElementById('changePasswordSection');
 
     let valid = true;
 
-    // Validate Mobile Digits
-    if (mobileDigits.length !== 4 || !/^\d{4}$/.test(mobileDigits)) {
-        mobileError.style.display = 'block';
+    // Validate Email
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailError.style.display = 'block';
         valid = false;
     } else {
-        mobileError.style.display = 'none';
+        emailError.style.display = 'none';
     }
 
-    // Validate Birth Date
-    if (!birthDate) {
-        birthDateError.style.display = 'block';
+    // Validate Last 4 Digits of Phone Number
+    if (!phoneDigits || phoneDigits.length !== 4 || !/^\d{4}$/.test(phoneDigits)) {
+        phoneDigitsError.style.display = 'block';
         valid = false;
     } else {
-        birthDateError.style.display = 'none';
+        phoneDigitsError.style.display = 'none';
     }
 
-    // Display final error message if not valid
-    if (!valid) {
-        errorMessage.classList.remove('hidden');
+    // Show Change Password Section if Email and Phone Digits are valid
+    if (valid && changePasswordSection.classList.contains('hidden')) {
+        changePasswordSection.classList.remove('hidden');
+        return;
+    }
+
+    // Validate New Password
+    if (newPassword && newPassword.value.length < 6) {
+        passwordError.style.display = 'block';
+        valid = false;
     } else {
-        errorMessage.classList.add('hidden');
-        alert('Password reset link sent to your registered email!');
+        passwordError.style.display = 'none';
+    }
+
+    // Validate Confirm Password
+    if (newPassword && confirmPassword && newPassword.value !== confirmPassword.value) {
+        confirmPasswordError.style.display = 'block';
+        valid = false;
+    } else {
+        confirmPasswordError.style.display = 'none';
+    }
+
+    // If all fields are valid, show success message
+    if (valid) {
+        successMessage.style.display = 'block';
+        alert('Your password has been successfully updated!');
         window.location.href = 'login.html';
     }
 });
+
+// Function to navigate back to login
+function goBack() {
+    window.location.href = 'login-page.html';
+}
