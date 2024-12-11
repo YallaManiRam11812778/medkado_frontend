@@ -63,13 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
             formContainer.appendChild(ageInput);
             formContainer.appendChild(genderLabel);
             formContainer.appendChild(genderSelect);
+
+            // Add event listeners to validate input dynamically
+            [nameInput, ageInput, genderSelect].forEach((input) => {
+                input.addEventListener("input", validateForm);
+            });
         }
 
         // Add a submit button
         const submitButton = document.createElement("button");
-        submitButton.type = "button"; // Change to button to handle custom logic
+        submitButton.type = "button";
         submitButton.classList.add("submit-button");
         submitButton.textContent = "Proceed to Payment";
+        submitButton.disabled = true; // Initially disabled
         formContainer.appendChild(submitButton);
 
         // Add event listener to submit button
@@ -84,95 +90,102 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("No plan selected. Please go back to the previous page.");
         window.location.href = "subscription-page.html";
     }
-});
 
-// Function to collect form data as list of dictionaries
-function collectFormData(count) {
-    const formDataList = [];
-    for (let i = 1; i <= count; i++) {
-        const name = document.getElementById(`name-${i}`).value;
-        const age = document.getElementById(`age-${i}`).value;
-        const gender = document.getElementById(`gender-${i}`).value;
+    // Function to validate form and toggle button state
+    function validateForm() {
+        const inputs = formContainer.querySelectorAll("input, select");
+        const allFilled = Array.from(inputs).every((input) => input.value.trim() !== "");
+        const submitButton = document.querySelector(".submit-button");
+        submitButton.disabled = !allFilled;
+    }
 
-        if (name && age && gender) {
+    // Function to collect form data as list of dictionaries
+    function collectFormData(count) {
+        const formDataList = [];
+
+        for (let i = 1; i <= count; i++) {
+            const nameInput = document.getElementById(`name-${i}`);
+            const ageInput = document.getElementById(`age-${i}`);
+            const genderSelect = document.getElementById(`gender-${i}`);
+
+            const name = nameInput.value.trim();
+            const age = ageInput.value.trim();
+            const gender = genderSelect.value;
+
             formDataList.push({
-                name1: name,
+                name: name,
                 age: age,
-                gender: gender
+                gender: gender,
             });
-        } else {
-            alert(`Please fill out all fields for Person ${i}`);
-            return [];
         }
+
+        return formDataList;
     }
-    return formDataList;
-}
 
-async function proceedToPayment(headers, formDataList) {
-    const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.adding_family_details";
+    async function proceedToPayment(headers, formDataList) {
+        const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.adding_family_details";
 
-    try {
-        // Ensure the payload is structured to match the server expectation
-        const payload = {
-            "family_details": formDataList // Use the key expected by the server
-        };
-        console.log("headers ====" ,headers)
-        const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                ...headers // Include other headers like Authorization
-            },
-            body: JSON.stringify(payload) // Pass structured data
-        });
+        try {
+            const payload = {
+                family_details: formDataList,
+            };
 
-        if (response.status === 401) {
-            console.warn("Unauthorized. Redirecting to login.");
-            window.location.href = "file:///android_asset/login-page.html";
-            return;
-        }
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...headers,
+                },
+                body: JSON.stringify(payload),
+            });
 
-        const apiResponse = await response.json();
-        if (apiResponse.message.success) {
-            console.log(" Done +++++");
-            // window.location.href = "file:///android_asset/.html";
-            // Redirect or perform actions after successful submission
-        } else {
-            console.error("Failed to submit payment data:", apiResponse.message);
-        }
-    } catch (error) {
-        console.error("Error submitting payment data:", error);
-    }
-}
-
-// Mock function to simulate server status check
-async function checkServerStatus() {
-    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
-  
-    try {
-      const response = await fetch(pingUrl);
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.message === "pong") {
-          
-          // Get API response headers with tokens if available
-          if (window.Android && window.Android.getApiResponse) {
-            const headersWithTokens = String(window.Android.getApiResponse());
-            if (headersWithTokens.includes("Authorization")) {
-              const cleanedHeaders = headersWithTokens.replace(/\\'/g, '"');
-              return JSON.parse(cleanedHeaders);
-            } else {
-              console.warn("No authorization token found. Redirecting to login.");
-              window.location.href = "file:///android_asset/login-page.html";
-              return null;
+            if (response.status === 401) {
+                console.warn("Unauthorized. Redirecting to login.");
+                window.location.href = "file:///android_asset/login-page.html";
+                return;
             }
-          }
+
+            const apiResponse = await response.json();
+            console.log(apiResponse, " =========== ");
+            if (apiResponse.message) {
+                console.log("Submission successful");
+
+                // Add redirection to another page after successful submission
+                alert("Payment link has been generated and sent to the registered email and mobile number.");
+                window.location.href = "file:///android_asset/payment-success-page.html";
+            } else {
+                console.error("Failed to submit payment data:", apiResponse.message);
+            }
+        } catch (error) {
+            console.error("Error submitting payment data:", error);
         }
-      }
-      throw new Error("Server is down");
-    } catch (error) {
-      console.error("Error checking server status:", error);
-      if (typeof showToast === 'function') showToast("Server is down."); // Display toast if showToast is defined
-      return null;
     }
-  }
+
+    async function checkServerStatus() {
+        const pingUrl = "http://192.168.0.121:8003/api/method/ping";
+
+        try {
+            const response = await fetch(pingUrl);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.message === "pong") {
+                    if (window.Android && window.Android.getApiResponse) {
+                        const headersWithTokens = String(window.Android.getApiResponse());
+                        if (headersWithTokens.includes("Authorization")) {
+                            const cleanedHeaders = headersWithTokens.replace(/\\'/g, '"');
+                            return JSON.parse(cleanedHeaders);
+                        } else {
+                            console.warn("No authorization token found. Redirecting to login.");
+                            window.location.href = "file:///android_asset/login-page.html";
+                            return null;
+                        }
+                    }
+                }
+            }
+            throw new Error("Server is down");
+        } catch (error) {
+            console.error("Error checking server status:", error);
+            return null;
+        }
+    }
+});

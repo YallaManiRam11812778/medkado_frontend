@@ -151,10 +151,14 @@
      display: block;
  }
  .menu-link:hover {
-     opacity: 0.8; /* Example hover effect */
+     opacity: 0.8; /* Example hover effect */v
  }
 
 .menu-text{
     text-decoration: none;
     display: block;
+}
+
+a{
+    text-decoration: none;
 }
