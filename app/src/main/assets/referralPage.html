@@ -3,45 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referral System</title>
+    <title>Referral Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="referral.css">
 </head>
 <body>
-<header>
-    <h1>Refer & Earn</h1>
-</header>
-<main>
-    <!-- Friend Login Section -->
-    <section id="friend-login">
-        <h2>Friend Login</h2>
-        <input type="text" id="friend-email" placeholder="Enter your email">
-        <input type="text" id="referral-code" placeholder="Enter referral code">
-        <button id="login-button">Login / Sign Up</button>
-        <p id="login-status"></p>
-    </section>
+<div class="container">
+    <div class="top-section">
+        <button id="backButton" class="back-button">
+            <i class="ri-arrow-left-line"></i> Back
+        </button>
+        <p class="help-text">Share your referral code with friends to earn rewards!</p>
+        <div class="referral-code-container">
+            <span id="referralCode">Loading...</span>
+            <button id="copyButton" disabled>Copy</button>
+        </div>
+    </div>
 
-    <!-- Transactions Section -->
-    <section id="transaction-history">
-        <h2>Referral Logs</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Friend's Email</th>
-                <th>Status</th>
-                <th>Amount</th>
-            </tr>
-            </thead>
-            <tbody id="transaction-table">
-            <!-- Dynamic rows will be inserted here -->
-            </tbody>
-        </table>
-    </section>
-</main>
-
-<footer>
-    <p>&copy; 2024 Refer & Earn Program</p>
-</footer>
+    <div class="bottom-section">
+        <h2>People Referred</h2>
+        <div id="referralCardsContainer">
+            <!-- Cards will be dynamically populated -->
+            <p>Loading...</p>
+        </div>
+    </div>
+</div>
 
 <script src="referral.js"></script>
 </body>

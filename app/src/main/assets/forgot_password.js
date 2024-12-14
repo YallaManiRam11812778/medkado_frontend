@@ -1,18 +1,45 @@
-// forgot-password.js
+// Function to check server status
+function checkServerStatus() {
+    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
+    return fetch(pingUrl)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Server is down");
+            }
+        })
+        .then((data) => {
+            if (data && data.message === "pong") {
+                console.log("Server is reachable.");
+                return true; // Server is up
+            } else {
+                showToast("Server is down.");
+                return false; // Server is down
+            }
+        })
+        .catch((error) => {
+            console.error("Error checking server status:", error);
+            showToast("Server is down.");
+            return false; // Server is down
+        });
+}
+window.addEventListener("load", checkServerStatus);
+
+// Forgot password logic
 document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
 
     const email = document.getElementById('email').value.trim();
     const phoneDigits = document.getElementById('phoneDigits').value.trim();
-    const newPassword = document.getElementById('newPassword');
-    const confirmPassword = document.getElementById('confirmPassword');
+    const newPassword = document.getElementById('newPassword').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
 
     const emailError = document.getElementById('emailError');
     const phoneDigitsError = document.getElementById('phoneDigitsError');
     const passwordError = document.getElementById('passwordError');
     const confirmPasswordError = document.getElementById('confirmPasswordError');
     const successMessage = document.getElementById('successMessage');
-
     const changePasswordSection = document.getElementById('changePasswordSection');
 
     let valid = true;
@@ -33,14 +60,45 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', functio
         phoneDigitsError.style.display = 'none';
     }
 
-    // Show Change Password Section if Email and Phone Digits are valid
-    if (valid && changePasswordSection.classList.contains('hidden')) {
-        changePasswordSection.classList.remove('hidden');
-        return;
+    // If email and phone are valid, hit the backend for verification
+    if (valid) {
+        const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.forgot_pwd";
+
+        // Send data in POST body to avoid encoding
+        const requestData = {
+            email: email,
+            phoneDigits: phoneDigits,
+            newPassword: newPassword,
+            confirmPassword: confirmPassword,
+        };
+
+        // Make API request with POST method
+        fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json", // Send as JSON
+            },
+            body: JSON.stringify(requestData),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("response ========== ,",data)
+            if (data.status === 'success') {
+                // If backend validation is successful, show the change password section
+                changePasswordSection.classList.remove('hidden');
+            } else {
+                // If validation fails, show error message
+                alert('The email and phone number do not match our records.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        });
     }
 
     // Validate New Password
-    if (newPassword && newPassword.value.length < 6) {
+    if (newPassword && newPassword.length < 6) {
         passwordError.style.display = 'block';
         valid = false;
     } else {
@@ -48,18 +106,11 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', functio
     }
 
     // Validate Confirm Password
-    if (newPassword && confirmPassword && newPassword.value !== confirmPassword.value) {
+    if (newPassword && confirmPassword && newPassword !== confirmPassword) {
         confirmPasswordError.style.display = 'block';
         valid = false;
     } else {
         confirmPasswordError.style.display = 'none';
-    }
-
-    // If all fields are valid, show success message
-    if (valid) {
-        successMessage.style.display = 'block';
-        alert('Your password has been successfully updated!');
-        window.location.href = 'login.html';
     }
 });
 
