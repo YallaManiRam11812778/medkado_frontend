@@ -7,133 +7,123 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
     font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden; /* Prevents side scrolling */
+    background-color: #F9F9F9;
+    overflow-x: hidden;
 }
 
-.container {
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: #F2F2F2;
+header {
+    background-color: #fff;
+    padding: 10px 15px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-
-.buy-coupon-btn {
+.header {
     display: flex;
-    color: #4461F2;
-    font-size:14px;
-    border:none;
-    font-weight:bold;
-    background:none;
-    margin-top:20px;
+    align-items: center;
 }
 
+.back-button {
+    text-decoration: none;
+    font-size: 16px;
+    color: #111;
+    margin-right: 10px;
+    display: inline-block;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
 
- /* Bottom Navigation */
- .bottom-nav {
-     position: fixed;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     display: flex;
-     justify-content: space-around;
-     align-items: center;
-     padding: 12px 0;
-     background-color: #ffffff;
-     border-top: 1px solid #eee;
- }
+h1 {
+    font-size: 16px;
+    margin: 0;
+}
 
- .nav-item {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     font-size: 12px;
-     color: #333;
-     text-decoration: none;
- }
+main {
+    padding: 15px;
+}
 
- .nav-item img {
-     width: 24px;
-     height: 24px;
-     margin-bottom: 4px;
- }
+.profile-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
- .nav-item.active {
-     color: #0072ff;
-     font-weight: bold;
- }
+.profile-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: calc(50% - 10px); /* Two cards per row */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
 
+.profile-item i {
+    font-size: 40px;
+    color: #4461F2;
+    margin-bottom: 10px;
+}
 
+.profile-item .name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
- header {
-   background-color: #fff;
-   padding: 10px 15px;
-   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
- }
+.profile-item .details {
+    font-size: 12px;
+    color: #666;
+}
 
- .header {
-   display: flex;
-   align-items: center;
- }
+.profile-item .gender {
+    margin-top: 5px;
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+}
+/* Your Plan Section */
+.your-plan {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+}
 
- .back-button {
-   text-decoration: none;
-   font-size: 16px;
-   color: #007bff;
-   margin-right: 10px;
-   display: inline-block;
-   padding: 5px;
-   background-color: transparent;
-   border: none;
-   cursor: pointer;
- }
+.your-plan h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #111;
+}
 
- h1 {
-   font-size: 16px;
-   margin: 0;
- }
+.plan-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
- main {
-   flex: 1;
-   padding: 10px 15px;
-   background-color: #f9f9f9;
-   overflow-y: auto;
- }
+.plan-details div {
+    font-size: 14px;
+    color: #444;
+}
 
- .profile-list {
-   list-style: none;
-   padding: 0;
-   margin: 0;
- }
+.plan-details span {
+    color: #000;
+}
 
- .profile-item {
-   display: flex;
-   align-items: center;
-   padding: 10px;
-   background-color: #fff;
-   margin-bottom: 10px;
-   border-radius: 5px;
-   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
- }
-
- .profile-item i {
-   font-size: 18px;
-   margin-right: 10px;
- }
-
- .profile-item .details {
-   display: flex;
-   flex-direction: column;
- }
-
- .details .name {
-   font-size: 14px;
-   font-weight: bold;
- }
-
- .details .subtext {
-   font-size: 12px;
-   color: #666;
- }
+/* Your Family Section */
+.your-family h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    color: #111;
+}

@@ -16,9 +16,23 @@
     </div>
 </header>
 <main>
-    <ul id="profile-list" class="profile-list"></ul>
-</main>
+    <!-- Your Plan Section -->
+    <section class="your-plan">
+        <h2>Your Plan</h2>
+        <div class="plan-details">
+            <!-- These elements will be dynamically updated by JavaScript -->
+            <div class="plan-name">Plan Name: <span id="plan-name">Loading...</span></div>
+            <div class="plan-duration">Plan Purchased: <span id="plan-duration">Loading...</span></div>
+            <div class="plan-start">Plan Expiry Date: <span id="plan-start">Loading...</span></div>
+        </div>
+    </section>
 
+    <!-- Your Family Section -->
+    <section class="your-family">
+        <h2>Your Family</h2>
+        <ul id="profile-list" class="profile-list"></ul>
+    </section>
+</main>
 <script src="MyProfile.js"></script>
 </body>
 </html>

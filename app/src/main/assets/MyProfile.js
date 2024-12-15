@@ -36,13 +36,11 @@ async function checkServerStatus() {
     }
 }
 
-// Function to fetch data from the backend
-async function fetchProfiles(headers) {
-    const apiUrl =
-        "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.family_members.family_members.my_family_members";
+async function fetchPlanDetails(headers) {
+    const planApiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.family_members.family_members.my_family_members"; // Replace with actual API endpoint
 
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(planApiUrl, {
             method: "GET",
             headers: headers,
         });
@@ -53,19 +51,36 @@ async function fetchProfiles(headers) {
 
         const result = await response.json();
         if (result.message && result.message.success) {
-            const profiles = result.message.message; // Adjust field names based on your API response
-            console.log("profiles =========== ",profiles)
-            const my_plan = result.message.plan
-            console.log(" my plan  ========= ",my_plan)
-            fillDetails(profiles); // Pass data to the UI render function
+            const plan = result.message.plan; // Adjust field names based on your API response
+            renderPlanDetails(result.message.plan,result.message.date_of_purchase,result.message.validity);
+            fillDetails(result.message.message);
         } else {
-            throw new Error("Some Error Occured while fetching Family member details.");
+            throw new Error("Failed to fetch plan details.");
         }
     } catch (error) {
-        console.error("Error fetching profiles:", error);
-        showToast("Failed to load profiles. Please try again.");
+        console.error("Error fetching plan details:", error);
+        showToast("Failed to load plan details. Please try again.");
     }
 }
+
+function renderPlanDetails(plan,date_of_purchase,validity) {
+    if (!plan) {
+        console.error("No plan details available.");
+        showToast("No plan details found.");
+        return;
+    }
+
+    // Dynamically update the plan details in the DOM
+    const planName = document.getElementById("plan-name");
+    const planDuration = document.getElementById("plan-duration");
+    const planStart = document.getElementById("plan-start");
+
+    // Update text content based on the plan data
+    planName.textContent = plan || "N/A";
+    planDuration.textContent = date_of_purchase || "N/A";
+    planStart.textContent = validity || "N/A";
+}
+
 
 function fillDetails(profiles) {
     const profileList = document.getElementById("profile-list");
@@ -74,7 +89,16 @@ function fillDetails(profiles) {
     if (profiles && profiles.length > 0) {
         profiles.forEach((profile) => {
             const listItem = document.createElement("li");
-            listItem.textContent = `${profile.name1}, Age: ${profile.age}, Gender: ${profile.gender}`;
+            listItem.className = "profile-item";
+
+            // Create card content
+            listItem.innerHTML = `
+                <i class="ri-user-3-fill"></i>
+                <div class="name">${profile.name1}</div>
+                <div class="details">Age: ${profile.age}</div>
+                <div class="gender">Gender: ${profile.gender}</div>
+            `;
+
             profileList.appendChild(listItem);
         });
     } else {
@@ -83,18 +107,16 @@ function fillDetails(profiles) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Check server status and get headers
     const headers = await checkServerStatus();
-    if (!headers) {
-        // Exit if the server is down or headers are not available
-        return;
-    }
+    if (!headers) return;
 
-    // Fetch and display profiles
+    // Fetch plan details
+    await fetchPlanDetails(headers);
+
+    // Fetch family profiles
     await fetchProfiles(headers);
 });
 
 function showToast(message) {
-    // Display a toast message (add your implementation or use a library)
     console.log("Toast message:", message);
 }
