@@ -524,3 +524,14 @@ body {
    text-align: center; /* Center-align text if needed */
    margin-top: 2px; /* Optional spacing */
  }
+
+ .coupons-container-link {
+     text-decoration: none;
+     display: block;
+ }
+
+.withdrawal-container-link {
+    text-decoration: none;
+    display: block;
+}
+

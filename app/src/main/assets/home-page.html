@@ -52,33 +52,50 @@
 
 
 <div class="statistics-section">
-    <div class="coupons-container">
-        <div class="card-header">
-            <span>Coupons left</span>
-            <a href="coupons-page.html">
+<!--    <div class="coupons-container">-->
+<!--        <div class="card-header">-->
+<!--            <span>Coupons left</span>-->
+<!--            <a href="coupons-page.html">-->
+<!--                <span class="arrow-icon">-->
+<!--                    <img class="arrowimg" src="arrow-right.png" alt="Arrow Icon">-->
+<!--                </span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Dynamically populated coupon count &ndash;&gt;-->
+<!--        <p class="coupon-count">-->
+<!--            <br>-->
+<!--            <span id="dynamicCouponCount">0</span>-->
+<!--        </p>-->
+<!--    </div>-->
+    <a href="coupons-page.html" class="coupons-container-link">
+        <div class="coupons-container">
+            <div class="card-header">
+                <span>Coupons left</span>
                 <span class="arrow-icon">
-                    <img class="arrowimg" src="arrow-right.png" alt="Arrow Icon">
-                </span>
-            </a>
+                <img class="arrowimg" src="arrow-right.png" alt="Arrow Icon">
+            </span>
+            </div>
+            <!-- Dynamically populated coupon count -->
+            <p class="coupon-count">
+                <br>
+                <span id="dynamicCouponCount">0</span>
+            </p>
         </div>
-        <!-- Dynamically populated coupon count -->
-        <p class="coupon-count">
-            <br>
-            <span id="dynamicCouponCount">0</span>
-        </p>
-    </div>
-    <div class="withdrawal-container">
-        <div class="card-header">
-            <span>Withdrawal</span>
-            <a href="#">
+    </a>
+
+    <a href="paymentpage.html" class="withdrawal-container-link">
+        <div class="withdrawal-container">
+            <div class="card-header">
+                <span>Withdrawal</span>
                 <span class="arrow-icon">
-                    <img class="arrowimg" src="arrow-right.png" alt="Arrow Icon">
-                </span>
-            </a>
+                <img class="arrowimg" src="arrow-right.png" alt="Arrow Icon">
+            </span>
+            </div>
+            <div class="withdrawal-amount">₹ 1,200.12</div>
+            <div class="refer-text">Refer & earn more</div>
         </div>
-        <div class="withdrawal-amount">₹ 1,200.12</div>
-        <div class="refer-text">Refer & earn more</div>
-    </div>
+    </a>
+
 </div>
 
 <!-- Health Card Section -->
