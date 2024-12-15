@@ -1,33 +1,20 @@
-// Function to check server status
-function checkServerStatus() {
-    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
-    return fetch(pingUrl)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error("Server is down");
-            }
-        })
-        .then((data) => {
-            if (data && data.message === "pong") {
-                console.log("Server is reachable.");
-                return true; // Server is up
-            } else {
-                showToast("Server is down.");
-                return false; // Server is down
-            }
-        })
-        .catch((error) => {
-            console.error("Error checking server status:", error);
-            showToast("Server is down.");
-            return false; // Server is down
-        });
+// Function to show a toaster message
+function showToast(message, type = "success") {
+    const toaster = document.createElement("div");
+    toaster.className = `toaster ${type}`;
+    toaster.textContent = message;
+
+    // Append the toaster to the body
+    document.body.appendChild(toaster);
+
+    // Remove the toaster after 3 seconds
+    setTimeout(() => {
+        toaster.remove();
+    }, 3000);
 }
-window.addEventListener("load", checkServerStatus);
 
 // Forgot password logic
-document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+document.getElementById('forgotPasswordForm').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission
 
     const email = document.getElementById('email').value.trim();
@@ -39,7 +26,6 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', functio
     const phoneDigitsError = document.getElementById('phoneDigitsError');
     const passwordError = document.getElementById('passwordError');
     const confirmPasswordError = document.getElementById('confirmPasswordError');
-    const successMessage = document.getElementById('successMessage');
     const changePasswordSection = document.getElementById('changePasswordSection');
 
     let valid = true;
@@ -60,10 +46,25 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', functio
         phoneDigitsError.style.display = 'none';
     }
 
-    // If email and phone are valid, hit the backend for verification
+    // Validate New Password
+    if (newPassword && newPassword.length < 6) {
+        passwordError.style.display = 'block';
+        valid = false;
+    } else {
+        passwordError.style.display = 'none';
+    }
+
+    // Validate Confirm Password
+    if (newPassword && confirmPassword && newPassword !== confirmPassword) {
+        confirmPasswordError.style.display = 'block';
+        valid = false;
+    } else {
+        confirmPasswordError.style.display = 'none';
+    }
+
+    // If all validations pass, proceed to call the API
     if (valid) {
         const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.forgot_pwd";
-
         // Send data in POST body to avoid encoding
         const requestData = {
             email: email,
@@ -80,41 +81,37 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', functio
             },
             body: JSON.stringify(requestData),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("response ========== ,",data)
-            if (data.status === 'success') {
-                // If backend validation is successful, show the change password section
-                changePasswordSection.classList.remove('hidden');
-            } else {
-                // If validation fails, show error message
-                alert('The email and phone number do not match our records.');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
-        });
-    }
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Response:", data);
 
-    // Validate New Password
-    if (newPassword && newPassword.length < 6) {
-        passwordError.style.display = 'block';
-        valid = false;
-    } else {
-        passwordError.style.display = 'none';
-    }
+                if (data.message && data.message.success) {
+                    // If backend validation is successful, show the change password section
+                    changePasswordSection.classList.remove('hidden');
+                    showToast("Your password has been successfully updated!");
 
-    // Validate Confirm Password
-    if (newPassword && confirmPassword && newPassword !== confirmPassword) {
-        confirmPasswordError.style.display = 'block';
-        valid = false;
-    } else {
-        confirmPasswordError.style.display = 'none';
+                    // Redirect after 5 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login-page.html'; // Redirect to login page
+                    }, 1000);
+                } else {
+                    const errorMessage = data.message.message || "The email and phone number do not match our records.";
+                    showToast(errorMessage, "error");
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                showToast("An error occurred. Please try again later.", "error");
+            });
     }
+});
+
+// Restrict phoneDigits input to numeric values
+document.getElementById('phoneDigits').addEventListener('input', function (event) {
+    this.value = this.value.replace(/[^0-9]/g, ''); // Allow only numeric characters
 });
 
 // Function to navigate back to login
 function goBack() {
-    window.location.href = 'login-page.html';
+    window.location.href = 'login-page.html'; // Redirect back to login page
 }
