@@ -91,3 +91,10 @@ body {
 .payment-card .url:hover {
     text-decoration: underline;
 }
+
+
+.withdraw-button.disabled {
+    background-color: #ccc; /* Gray out the button */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+    opacity: 0.6; /* Reduce opacity */
+}

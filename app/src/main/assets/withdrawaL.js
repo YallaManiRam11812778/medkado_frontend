@@ -38,10 +38,13 @@ async function checkServerStatus() {
         return false;
     }
 }
+
 async function withdrawal_requesting(headers) {
     const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.done_payment_for_user";
     const paymentsList = document.getElementById("payments-list");
     const withdrawAmountElement = document.getElementById("withdraw-amount");
+    const withdrawButton = document.querySelector(".withdraw-button");
+
     // Clear previous entries before rendering new ones
     paymentsList.innerHTML = "";
 
@@ -56,32 +59,44 @@ async function withdrawal_requesting(headers) {
         }
 
         const result = await response.json();
-        console.log(result," =================== ");
-        // Ensure result.message and result.message.success exist
+        console.log(result, " =================== ");
+
         if (!result.message || !result.message.success) {
             paymentsList.innerHTML = "<p>Sorry for the inconvenience. Error near our server.</p>";
             return;
         }
 
         if (result.message && result.message.withdraw_amount) {
+            const withdrawAmount = result.message.withdraw_amount;
+
             // Update the withdraw amount dynamically
-            withdrawAmountElement.textContent = `₹ ${result.message.withdraw_amount}`;
+            withdrawAmountElement.textContent = `₹ ${withdrawAmount}`;
+
+            // Disable the withdraw button if the amount is zero
+            if (withdrawAmount === 0) {
+                withdrawButton.disabled = true;
+                withdrawButton.classList.add("disabled");
+            } else {
+                withdrawButton.disabled = false;
+                withdrawButton.classList.remove("disabled");
+            }
         } else {
-            withdrawAmountElement.textContent = "₹ 0"; // Default value if withdraw_amount is missing
+            withdrawAmountElement.textContent = "₹ 0";
+            withdrawButton.disabled = true;
+            withdrawButton.classList.add("disabled");
         }
-        // Check if message array contains entries
+
         if (Array.isArray(result.message.message) && result.message.message.length > 0) {
-            // Dynamically render cards
             result.message.message.forEach((payment) => {
+                console.log("payment ======== ",payment)
                 const card = document.createElement("div");
                 card.classList.add("payment-card");
 
                 card.innerHTML = `
                     <h4>Amount: ₹${payment.amount}</h4>
-                    <p>Created At: ${new Date(payment.creation).toLocaleString()}</p>
+                    <p>Created At: ${new Date(payment.requested_time).toLocaleString()}</p>
                     <p>Status: <span class="status">${payment.status}</span></p>
-                    <p><a href="${payment.url}" class="url" target="_blank">Payment Link</a></p>
-                    <p>Expires At: ${new Date(payment.url_expiry).toLocaleString()}</p>
+                    <p>Expires At: ${new Date(payment.paid_time).toLocaleString()}</p>
                 `;
 
                 paymentsList.appendChild(card);
@@ -91,10 +106,9 @@ async function withdrawal_requesting(headers) {
         }
     } catch (error) {
         console.error("Error fetching payment details:", error);
-        showToast && showToast("Failed to load payment details. Please try again."); // Ensure showToast exists
+        showToast && showToast("Failed to load payment details. Please try again.");
     }
 }
-
 
 document.addEventListener("DOMContentLoaded", async () => {
     const headers = await checkServerStatus();
@@ -103,10 +117,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     await withdrawal_requesting(headers);
 });
 
-function goBack() {
-    window.location.href = "account-page.html";
-}
-
 function showToast(message) {
     console.log("Toast message:", message);
+}
+
+async function handleWithdraw() {
+    const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.withdrawal_requesting";
+
+    try {
+        const headers = await checkServerStatus();
+        if (!headers) return;
+
+        const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: headers,
+        });
+
+        const result = await response.json();
+        if (response.ok && result.message.success) {
+            document.getElementById("withdraw-amount").textContent = "₹ 0";
+            showToast("Withdrawal successful!");
+            window.location.href = "withdrawalpage.html";
+        } else {
+            throw new Error(result.message.message || "Withdrawal failed");
+        }
+    } catch (error) {
+        console.error("Error during withdrawal:", error);
+        showToast("Withdrawal failed. Please try again.");
+    }
 }
