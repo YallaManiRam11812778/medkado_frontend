@@ -88,7 +88,6 @@ async function withdrawal_requesting(headers) {
 
         if (Array.isArray(result.message.message) && result.message.message.length > 0) {
             result.message.message.forEach((payment) => {
-                console.log("payment ======== ",payment)
                 const card = document.createElement("div");
                 card.classList.add("payment-card");
 
