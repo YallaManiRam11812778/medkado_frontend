@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (response_dashboard) {
       // Dynamically update card details with response data
       if (response_dashboard.doe) {
-        cardExpiryElem.textContent = response_dashboard.doe; // Update MM/YY
+        cardExpiryElem.textContent = `Validity: ${response_dashboard.doe}`; // Update MM/YY
       }
       const withdrawalAmountElement = document.getElementById("withdrawal-amount");
       if (withdrawalAmountElement) {
