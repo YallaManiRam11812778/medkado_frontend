@@ -38,10 +38,12 @@ async function checkServerStatus() {
         return false;
     }
 }
-
 async function fetchpaymentDetails(headers) {
     const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_admin_settings.medkado_admin_settings.payment_details_of_user";
     const paymentsList = document.getElementById("payments-list");
+
+    // Clear previous entries before rendering new ones
+    paymentsList.innerHTML = "";
 
     try {
         const response = await fetch(apiUrl, {
@@ -54,13 +56,16 @@ async function fetchpaymentDetails(headers) {
         }
 
         const result = await response.json();
-        console.log("API Response:", result);
-        console.log("each =========== ",result.message.message)
-        console.log("len =========== ",result.message.message.length)
+        // Ensure result.message and result.message.success exist
+        if (!result.message || !result.message.success) {
+            paymentsList.innerHTML = "<p>Sorry for the inconvenience. Error near our server.</p>";
+            return;
+        }
 
-        if (result.message && result.message.message.length > 0) {
+        // Check if message array contains entries
+        if (Array.isArray(result.message.message) && result.message.message.length > 0) {
             // Dynamically render cards
-            result.message.message.forEach(payment => {
+            result.message.message.forEach((payment) => {
                 const card = document.createElement("div");
                 card.classList.add("payment-card");
 
@@ -79,9 +84,10 @@ async function fetchpaymentDetails(headers) {
         }
     } catch (error) {
         console.error("Error fetching payment details:", error);
-        showToast("Failed to load payment details. Please try again.");
+        showToast && showToast("Failed to load payment details. Please try again."); // Ensure showToast exists
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     const headers = await checkServerStatus();

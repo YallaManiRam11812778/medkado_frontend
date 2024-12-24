@@ -85,15 +85,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (headers) {
     // Fetch card details if headers are available
     const response_dashboard = await dashboard_data_fun(headers);
-
     if (response_dashboard) {
-      console.log("response_dashboard ======= ", response_dashboard);
-
       // Dynamically update card details with response data
       if (response_dashboard.doe) {
         cardExpiryElem.textContent = response_dashboard.doe; // Update MM/YY
       }
-
+      const withdrawalAmountElement = document.getElementById("withdrawal-amount");
+      if (withdrawalAmountElement) {
+        withdrawalAmountElement.textContent = response_dashboard.withdrawal;
+        }
+      const cardNumber_ref = document.getElementById("cardNumber");
+      if (cardNumber_ref) {
+        cardNumber_ref.textContent = response_dashboard.card_number;
+        }
       if (response_dashboard.dop) {
         cardPurchaseDateElem.textContent = `Date of Purchase: ${response_dashboard.dop}`; // Update date of purchase
       }
@@ -116,7 +120,6 @@ document.getElementById("exploreButton").addEventListener("click", async functio
 
   // Check server status and get headers
   const headers = await checkServerStatus();
-  console.log("headers ========  ", headers);
   if (!headers) {
     // Exit if the server is down or headers are not available
     return;

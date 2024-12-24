@@ -124,7 +124,7 @@ body {
 }
 
 /* Withdrawal amount style */
-.withdrawal-amount {
+#withdrawal-amount {
     font-size: 18px; /* Adjusted font size for emphasis */
     font-weight: bold;
     color: #4caf50;
@@ -328,8 +328,8 @@ body {
     margin-top: 0px;
 }
 .card-number {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   letter-spacing: px;
   margin-bottom: 0px;
 }
@@ -410,7 +410,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px; /* Adjust as needed */
-    margin:left:10px;
+    margin-left:10px;
 }
 
 /* Styling for the Nearby Services text */
@@ -522,7 +522,7 @@ body {
    font-weight: bold; /* Bolder text */
    color: #0072ff; /* Blue color for emphasis */
    text-align: center; /* Center-align text if needed */
-   margin-top: 2px; /* Optional spacing */
+   padding-bottom:10px;
  }
 
  .coupons-container-link {
@@ -533,5 +533,9 @@ body {
 .withdrawal-container-link {
     text-decoration: none;
     display: block;
+}
+
+.coupons-container .card-header{
+    margin-bottom:-10px;
 }
 
