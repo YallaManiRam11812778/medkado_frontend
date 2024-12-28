@@ -64,7 +64,7 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', functio
 
     // If all validations pass, proceed to call the API
     if (valid) {
-        const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.forgot_pwd";
+        const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_user.forgot_pwd";
         // Send data in POST body to avoid encoding
         const requestData = {
             email: email,

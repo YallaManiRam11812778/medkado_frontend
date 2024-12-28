@@ -1,7 +1,7 @@
 // Function to fetch district options from the backend
 async function fetchDistricts() {
     try {
-        const response = await fetch('http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.locations_dropdown', { method: "GET" });
+        const response = await fetch('http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_user.locations_dropdown', { method: "GET" });
         const data = await response.json();
         if (data.message && data.message.message) {
             const districts = data.message.message;
@@ -32,8 +32,8 @@ async function fetchDistricts() {
 async function fetchHospitalDataForDistrict(selectedDistrict, headers) {
     try {
         const mapsPageUrl = selectedDistrict
-            ? `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page?location=${encodeURIComponent(selectedDistrict)}`
-            : `http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page`;
+            ? `http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page?location=${encodeURIComponent(selectedDistrict)}`
+            : `http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_available_districts.medkado_available_districts.maps_page`;
 
         const mapsPageResponse = await fetch(mapsPageUrl, {
             method: "GET",
@@ -92,7 +92,7 @@ async function fetchHospitalDataForDistrict(selectedDistrict, headers) {
 
 // Function to check server status and get API response if server is up
 async function checkServerStatus() {
-    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
+    const pingUrl = "http://172.104.207.190:8009/api/method/ping";
 
     try {
         const response = await fetch(pingUrl);

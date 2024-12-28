@@ -18,7 +18,7 @@ const websiteLinkElem = document.querySelector(".website-link");
 // Fetch data from the backend and update the card content
 async function dashboard_data_fun(headers) {
   try {
-    const dashboard_data = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_home_page.dashboard_data";
+    const dashboard_data = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_home_page.dashboard_data";
     const dashboard_data_response = await fetch(dashboard_data, {
       method: "GET",
       headers: headers
@@ -47,7 +47,7 @@ async function dashboard_data_fun(headers) {
 
 // Function to check server status and get API response if server is up
 async function checkServerStatus() {
-  const pingUrl = "http://192.168.0.121:8003/api/method/ping";
+  const pingUrl = "http://172.104.207.190:8009/api/method/ping";
 
   try {
     const response = await fetch(pingUrl);
@@ -126,7 +126,7 @@ document.getElementById("exploreButton").addEventListener("click", async functio
   } else {
     // Use headers to make a request
     try {
-      const exploreUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_home_page.explore_plans";
+      const exploreUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_home_page.explore_plans";
       const exploreResponse = await fetch(exploreUrl, {
         method: "GET",
         headers: headers

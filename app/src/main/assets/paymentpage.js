@@ -4,7 +4,7 @@ function goBack() {
 }
 
 async function checkServerStatus() {
-    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
+    const pingUrl = "http://172.104.207.190:8009/api/method/ping";
 
     try {
         const response = await fetch(pingUrl);
@@ -39,7 +39,7 @@ async function checkServerStatus() {
     }
 }
 async function fetchpaymentDetails(headers) {
-    const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_admin_settings.medkado_admin_settings.payment_details_of_user";
+    const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_admin_settings.medkado_admin_settings.payment_details_of_user";
     const paymentsList = document.getElementById("payments-list");
 
     // Clear previous entries before rendering new ones
