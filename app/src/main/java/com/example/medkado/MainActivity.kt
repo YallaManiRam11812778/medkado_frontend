@@ -24,6 +24,9 @@ import com.chaquo.python.android.AndroidPlatform
 import java.io.File
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var webView: WebView // Declare WebView as a member variable
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,15 +41,26 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 Scaffold { innerPadding ->
-                    WebViewScreen(modifier = Modifier.padding(innerPadding))
+                    WebViewScreen(modifier = Modifier.padding(innerPadding)) { createdWebView ->
+                        webView = createdWebView // Initialize the WebView instance
+                    }
                 }
             }
+        }
+    }
+
+    // Override the back button behavior
+    override fun onBackPressed() {
+        if (::webView.isInitialized && webView.canGoBack()) {
+            webView.goBack() // Navigate to the previous page in the WebView
+        } else {
+            super.onBackPressed() // Default back button behavior
         }
     }
 }
 
 @Composable
-fun WebViewScreen(modifier: Modifier = Modifier) {
+fun WebViewScreen(modifier: Modifier = Modifier, onWebViewCreated: (WebView) -> Unit) {
     AndroidView(
         factory = { context ->
             WebView(context).apply {
@@ -65,6 +79,7 @@ fun WebViewScreen(modifier: Modifier = Modifier) {
                 settings.javaScriptEnabled = true // Enable JavaScript
                 loadUrl("file:///android_asset/login-page.html") // Load the local HTML file
                 addJavascriptInterface(WebAppInterface(context, this), "Android") // Attach JavaScript interface
+                onWebViewCreated(this) // Pass the WebView instance to the caller
             }
         },
         modifier = modifier.fillMaxSize() // Fill the available screen size

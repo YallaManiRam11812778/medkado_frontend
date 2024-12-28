@@ -80,15 +80,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 data.message.referred_users.forEach(user => {
                     const card = document.createElement('div');
                     card.className = 'referral-card';
-            
+
                     card.innerHTML = `
                         <p>${user}</p>
                     `;
-            
+
                     referralCardsContainer.appendChild(card);
                 });
             }
-            
+
         }
     } catch (error) {
         console.error('Error fetching referral data:', error);
