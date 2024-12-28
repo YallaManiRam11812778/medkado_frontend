@@ -2,6 +2,7 @@ package com.example.medkado
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -55,6 +56,17 @@ class MainActivity : ComponentActivity() {
             webView.goBack() // Navigate to the previous page in the WebView
         } else {
             super.onBackPressed() // Default back button behavior
+        }
+    }
+
+    // Handle configuration changes
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Add any logic here if you want to handle orientation changes
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.d("MainActivity", "Switched to Landscape")
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.d("MainActivity", "Switched to Portrait")
         }
     }
 }
