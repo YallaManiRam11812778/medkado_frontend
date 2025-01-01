@@ -1,24 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Retrieve the selected plan details from sessionStorage
     const selectedPlan = JSON.parse(sessionStorage.getItem("selectedPlan"));
-
-    // Get the form container
     const formContainer = document.getElementById("subscription-form");
 
     if (selectedPlan) {
         const { count_of_persons, plan_type } = selectedPlan;
 
-        // Update the page title dynamically based on the plan
         const pageTitle = document.querySelector(".page-title");
         pageTitle.textContent = `Subscription for ${plan_type}`;
 
-        // Generate fields for each person
         for (let i = 1; i <= count_of_persons; i++) {
-            // Section title
             const sectionTitle = document.createElement("h4");
             sectionTitle.textContent = `Person ${i}`;
 
-            // Name field
             const nameLabel = document.createElement("label");
             nameLabel.setAttribute("for", `name-${i}`);
             nameLabel.textContent = "Name";
@@ -29,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
             nameInput.placeholder = `Enter name of person ${i}`;
             nameInput.required = true;
 
-            // Age field
             const ageLabel = document.createElement("label");
             ageLabel.setAttribute("for", `age-${i}`);
             ageLabel.textContent = "Age";
@@ -40,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ageInput.placeholder = `Enter age of person ${i}`;
             ageInput.required = true;
 
-            // Gender field
             const genderLabel = document.createElement("label");
             genderLabel.setAttribute("for", `gender-${i}`);
             genderLabel.textContent = "Gender";
@@ -55,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <option value="other">Other</option>
             `;
 
-            // Append fields to form
             formContainer.appendChild(sectionTitle);
             formContainer.appendChild(nameLabel);
             formContainer.appendChild(nameInput);
@@ -64,26 +54,37 @@ document.addEventListener("DOMContentLoaded", () => {
             formContainer.appendChild(genderLabel);
             formContainer.appendChild(genderSelect);
 
-            // Add event listeners to validate input dynamically
             [nameInput, ageInput, genderSelect].forEach((input) => {
                 input.addEventListener("input", validateForm);
             });
         }
 
-        // Add a submit button
         const submitButton = document.createElement("button");
         submitButton.type = "button";
         submitButton.classList.add("submit-button");
         submitButton.textContent = "Proceed to Payment";
-        submitButton.disabled = true; // Initially disabled
+        submitButton.disabled = true;
+
         formContainer.appendChild(submitButton);
 
-        // Add event listener to submit button
         submitButton.addEventListener("click", async () => {
-            const formData = collectFormData(count_of_persons); // Collect data
-            const headers = await checkServerStatus(); // Ensure headers are retrieved
-            if (headers) {
-                await proceedToPayment(headers, formData); // Call the API
+            // Add loader beside button text
+            submitButton.innerHTML = "Proceeding... <span class='loader'></span>";
+            submitButton.disabled = true; // Disable the button during operation
+
+            try {
+                const formData = collectFormData(count_of_persons);
+                const headers = await checkServerStatus();
+                if (headers) {
+                    await proceedToPayment(headers, formData);
+                }
+            } catch (error) {
+                console.error("Error during payment:", error);
+                alert("An error occurred. Please try again.");
+            } finally {
+                // Restore button state
+                submitButton.innerHTML = "Proceed to Payment";
+                submitButton.disabled = false;
             }
         });
     } else {
@@ -91,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "subscription-page.html";
     }
 
-    // Function to validate form and toggle button state
     function validateForm() {
         const inputs = formContainer.querySelectorAll("input, select");
         const allFilled = Array.from(inputs).every((input) => input.value.trim() !== "");
@@ -99,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.disabled = !allFilled;
     }
 
-    // Function to collect form data as list of dictionaries
     function collectFormData(count) {
         const formDataList = [];
 
@@ -148,9 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const apiResponse = await response.json();
             console.log(apiResponse, " =========== ");
             if (apiResponse.message) {
-                console.log("Submission successful");
-
-                // Add redirection to another page after successful submission
                 alert("Payment link has been generated and sent to the registered email and mobile number.");
                 window.location.href = "file:///android_asset/payment-success-page.html";
             } else {

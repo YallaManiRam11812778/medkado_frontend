@@ -95,7 +95,11 @@ async function withdrawal_requesting(headers) {
                     <h4>Amount: ₹${payment.amount}</h4>
                     <p>Created At: ${new Date(payment.requested_time).toLocaleString()}</p>
                     <p>Status: <span class="status">${payment.status}</span></p>
-                    <p>Paid At: ${new Date(payment.paid_time).toLocaleString()}</p>
+                    ${
+                        payment.status !== "Requested"
+                            ? `<p>Paid At: ${new Date(payment.paid_time).toLocaleString()}</p>`
+                            : ""
+                    }
                 `;
 
                 paymentsList.appendChild(card);
