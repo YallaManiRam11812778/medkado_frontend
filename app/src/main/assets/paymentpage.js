@@ -39,7 +39,7 @@ async function checkServerStatus() {
     }
 }
 async function fetchpaymentDetails(headers) {
-    const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_admin_settings.medkado_admin_settings.payment_details_of_user";
+    const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_admin_settings.medkado_admin_settings.payment_details_of_user_dashboard";
     const paymentsList = document.getElementById("payments-list");
 
     // Clear previous entries before rendering new ones
