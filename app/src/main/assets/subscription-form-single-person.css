@@ -62,8 +62,8 @@ form {
 }
 
 label {
-    font-size: 14px;
-    margin: 15px 0 5px;
+    font-size: 12px;
+    margin: 10px 0 5px;
 }
 
 input, select {
@@ -71,7 +71,7 @@ input, select {
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 /* Section title styling */
