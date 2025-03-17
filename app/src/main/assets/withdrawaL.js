@@ -4,7 +4,7 @@ function goBack() {
 }
 
 async function checkServerStatus() {
-    const pingUrl = "http://172.104.207.190:8009/api/method/ping";
+    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
 
     try {
         const response = await fetch(pingUrl);
@@ -40,7 +40,7 @@ async function checkServerStatus() {
 }
 
 async function withdrawal_requesting(headers) {
-    const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_user.done_payment_for_user";
+    const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.done_payment_for_user";
     const paymentsList = document.getElementById("payments-list");
     const withdrawAmountElement = document.getElementById("withdraw-amount");
     const withdrawButton = document.querySelector(".withdraw-button");
@@ -125,7 +125,7 @@ function showToast(message) {
 }
 
 async function handleWithdraw() {
-    const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_user.withdrawal_requesting";
+    const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.withdrawal_requesting";
 
     try {
         const headers = await checkServerStatus();

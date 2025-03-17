@@ -1,5 +1,5 @@
 async function checkServerStatus() {
-    const pingUrl = "http://172.104.207.190:8009/api/method/ping";
+    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
 
     try {
         const response = await fetch(pingUrl);
@@ -37,7 +37,7 @@ async function checkServerStatus() {
 }
 
 async function fetchPlanDetails(headers) {
-    const planApiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.family_members.family_members.my_family_members"; // Replace with actual API endpoint
+    const planApiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.family_members.family_members.my_family_members"; // Replace with actual API endpoint
 
     try {
         const response = await fetch(planApiUrl, {

@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function proceedToPayment(headers, formDataList) {
-        const apiUrl = "http://172.104.207.190:8009/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.adding_family_details";
+        const apiUrl = "http://192.168.0.121:8003/api/method/medkado.medkado.doctype.available_coupons_items.available_coupons_items.adding_family_details";
 
         try {
             const payload = {
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function checkServerStatus() {
-        const pingUrl = "http://172.104.207.190:8009/api/method/ping";
+        const pingUrl = "http://192.168.0.121:8003/api/method/ping";
 
         try {
             const response = await fetch(pingUrl);

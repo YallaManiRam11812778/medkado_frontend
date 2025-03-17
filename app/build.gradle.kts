@@ -49,9 +49,7 @@ android {
 }
 
     chaquopy {
-        defaultConfig { }
-        productFlavors { }
-        sourceSets { }
+        defaultConfig { version = "3.12.2" }
     }
 
     dependencies {

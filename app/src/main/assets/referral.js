@@ -1,5 +1,5 @@
 async function checkServerStatus() {
-    const pingUrl = "http://172.104.207.190:8009/api/method/ping";
+    const pingUrl = "http://192.168.0.121:8003/api/method/ping";
 
     try {
         const response = await fetch(pingUrl);
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const headers = await checkServerStatus();
         if (!headers) return;
         // Fetch referral data from backend
-        const response = await fetch(`http://172.104.207.190:8009/api/method/medkado.medkado.doctype.medkado_user.medkado_user.referred_people`, {
+        const response = await fetch(`http://192.168.0.121:8003/api/method/medkado.medkado.doctype.medkado_user.medkado_user.referred_people`, {
             method: "GET",
             headers: headers});
         const data = await response.json();
